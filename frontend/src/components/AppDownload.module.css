@@ -326,3 +326,18 @@
   font-weight: 700;
   color: #1e293b;
 }
+
+@media (max-width: 1024px) {
+  .inner { padding: 0 40px; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .title { font-size: 1.9rem; white-space: normal; }
+  .phone { width: 230px; }
+}
+
+@media (max-width: 768px) {
+  .section { padding: 48px 0 0; }
+  .inner { grid-template-columns: 1fr; padding: 0 20px; }
+  .title { font-size: 1.7rem; white-space: normal; }
+  .right { display: none; }
+  .left { padding-bottom: 48px; }
+  .storeButtons { justify-content: flex-start; }
+}

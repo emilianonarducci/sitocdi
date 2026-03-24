@@ -230,3 +230,19 @@
   border-radius: var(--radius-sm);
   font-weight: 700;
 }
+
+@media (max-width: 1024px) {
+  .servicesGrid { grid-template-columns: repeat(2, 1fr); }
+  .reviewsGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .services { padding: 48px 0; }
+  .sectionTitle { font-size: 1.5rem; }
+  .sectionHeader { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .servicesGrid { grid-template-columns: 1fr; }
+  .reviewsGrid { grid-template-columns: 1fr; }
+  .filterTabs { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+  .filterTab { flex-shrink: 0; }
+  .reviews { padding: 48px 0; }
+}

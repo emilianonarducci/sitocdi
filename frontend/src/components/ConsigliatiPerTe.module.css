@@ -52,3 +52,8 @@
   font-size: .8rem;
   text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; gap: 12px; }
+  .section { padding: 20px 0; }
+}

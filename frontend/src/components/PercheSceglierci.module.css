@@ -156,3 +156,16 @@
 .arrow:hover { background: rgba(255, 255, 255, 0.22); }
 .arrowLeft  { left: 20px; }
 .arrowRight { right: 20px; }
+
+@media (max-width: 1024px) {
+  .inner { padding: 40px 40px 36px; }
+  .cards { grid-template-columns: 1fr; gap: 12px; }
+}
+
+@media (max-width: 768px) {
+  .section { min-height: auto; }
+  .inner { padding: 32px 20px 28px; }
+  .textBlock h2 { font-size: 1.8rem; }
+  .textBlock { margin-bottom: 28px; }
+  .arrow { display: none; }
+}

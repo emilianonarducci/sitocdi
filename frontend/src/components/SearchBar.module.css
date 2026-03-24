@@ -230,3 +230,19 @@
 .branca { font-size: .8rem; color: var(--color-gray-600); margin-bottom: 8px; }
 .prezzo { font-size: 1rem; font-weight: 700; color: var(--color-accent); }
 .fondi { font-size: .75rem; color: var(--color-green); margin-top: 4px; }
+
+@media (max-width: 1024px) {
+  .card { padding: 28px 28px 32px; }
+}
+
+@media (max-width: 768px) {
+  .card { padding: 20px 16px 24px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+  .header { flex-direction: column; align-items: flex-start; margin-bottom: 20px; }
+  .headerText h2 { font-size: 1.5rem; }
+  .searchPill { flex-direction: column; border-radius: 16px; overflow: hidden; }
+  .pillField { border-radius: 0 !important; border-bottom: 1px solid var(--color-gray-300); padding: 12px 16px; }
+  .pillField:last-of-type { border-bottom: none; }
+  .divider { display: none; }
+  .cercaBtn { margin: 8px; border-radius: 12px; padding: 14px; }
+  .grid { grid-template-columns: 1fr; }
+}

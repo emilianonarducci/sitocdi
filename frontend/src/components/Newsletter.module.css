@@ -149,3 +149,17 @@
   object-position: center center;
   display: block;
 }
+
+@media (max-width: 1024px) {
+  .section { padding: 48px 40px; }
+}
+
+@media (max-width: 768px) {
+  .section { padding: 40px 20px; }
+  .card { grid-template-columns: 1fr; height: auto; }
+  .imgSide { display: none; }
+  .formSide { padding: 32px 28px; }
+  .title { font-size: 1.4rem; }
+  .footer { flex-direction: column; align-items: flex-start; }
+  .btn { width: 100%; text-align: center; justify-content: center; }
+}

@@ -79,3 +79,10 @@
   transition: background var(--transition);
 }
 .reservedBtn:hover { background: var(--color-primary-dark); }
+
+@media (max-width: 768px) {
+  .inner { height: 64px; gap: 16px; }
+  .nav { display: none; }
+  .langBtn { display: none; }
+  .iconBtn { width: 36px; height: 36px; }
+}
