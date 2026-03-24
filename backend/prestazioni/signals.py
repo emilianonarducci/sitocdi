@@ -6,12 +6,18 @@ from .search import index_prestazione, delete_prestazione
 
 @receiver(post_save, sender=Prestazione)
 def on_prestazione_save(sender, instance, **kwargs):
-    index_prestazione(instance)
+    try:
+        index_prestazione(instance)
+    except Exception:
+        pass
 
 
 @receiver(post_delete, sender=Prestazione)
 def on_prestazione_delete(sender, instance, **kwargs):
-    delete_prestazione(instance.id)
+    try:
+        delete_prestazione(instance.id)
+    except Exception:
+        pass
 
 
 @receiver(m2m_changed, sender=Prestazione.strutture.through)
@@ -19,4 +25,7 @@ def on_prestazione_delete(sender, instance, **kwargs):
 @receiver(m2m_changed, sender=Prestazione.fondi.through)
 def on_prestazione_m2m_changed(sender, instance, **kwargs):
     if isinstance(instance, Prestazione):
-        index_prestazione(instance)
+        try:
+            index_prestazione(instance)
+        except Exception:
+            pass
