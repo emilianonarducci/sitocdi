@@ -1,0 +1,46 @@
+databases:
+  - name: cdi-postgres
+    plan: free
+    databaseName: cdi
+    user: cdi
+
+services:
+  # ── Backend Django ──────────────────────────────────────────
+  - type: web
+    name: cdi-backend
+    env: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --no-input && python manage.py migrate
+    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: cdi-postgres
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com,localhost"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://cdi-frontend.onrender.com"
+      - key: OPENSEARCH_URL
+        value: "http://localhost:9200"
+
+  # ── Frontend Next.js ────────────────────────────────────────
+  - type: web
+    name: cdi-frontend
+    env: node
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: node .next/standalone/server.js
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: "https://cdi-backend.onrender.com"
+      - key: PORT
+        value: "3000"
+      - key: HOSTNAME
+        value: "0.0.0.0"

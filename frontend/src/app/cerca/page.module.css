@@ -1,0 +1,135 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-gray-50);
+  padding: 48px 0 80px;
+}
+
+.header {
+  margin-bottom: 32px;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 16px;
+  display: block;
+}
+.backBtn:hover { text-decoration: underline; }
+
+.header h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+.header h1 span { color: var(--color-accent); }
+
+.filterLabel {
+  color: var(--color-gray-600);
+  font-size: .875rem;
+  margin-top: 4px;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--color-gray-600);
+}
+
+.empty {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--color-gray-600);
+}
+.empty a { color: var(--color-accent); text-decoration: underline; }
+
+.countLabel {
+  font-size: .875rem;
+  color: var(--color-gray-600);
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: box-shadow var(--transition), transform var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.branca {
+  font-size: .75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--color-accent);
+  background: var(--color-accent-light);
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.prezzo {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  line-height: 1.3;
+}
+
+.desc {
+  font-size: .875rem;
+  color: var(--color-gray-600);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardMeta {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.sedi { font-size: .8rem; color: var(--color-gray-600); }
+.fondi { font-size: .8rem; color: var(--color-green); font-weight: 600; }
+
+.detailBtn {
+  margin-top: 8px;
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  font-size: .875rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+.detailBtn:hover { text-decoration: underline; }

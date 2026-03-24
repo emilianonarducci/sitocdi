@@ -1,0 +1,232 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-gray-50);
+  padding: 40px 0 80px;
+}
+
+.loading {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--color-gray-600);
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 24px;
+  display: block;
+}
+.backBtn:hover { text-decoration: underline; }
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 32px;
+  align-items: start;
+}
+
+/* Hero */
+.hero {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.branca {
+  display: inline-block;
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--color-accent);
+  background: var(--color-accent-light);
+  padding: 4px 12px;
+  border-radius: 12px;
+  margin-right: 8px;
+  margin-bottom: 12px;
+}
+
+.codice {
+  display: inline-block;
+  font-size: .75rem;
+  color: var(--color-gray-600);
+  background: var(--color-gray-100);
+  padding: 4px 10px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.hero h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.desc {
+  font-size: .95rem;
+  color: var(--color-gray-600);
+  line-height: 1.7;
+}
+
+/* Sections */
+.section {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.section h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 20px;
+}
+
+/* Medici */
+.medicoGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.medicoCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: var(--color-gray-50);
+  border-radius: var(--radius-md);
+}
+
+.medicoAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-accent-light);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.medicoNome { font-weight: 600; font-size: .9rem; color: var(--color-gray-900); }
+.medicoSpec { font-size: .8rem; color: var(--color-gray-600); margin-top: 2px; }
+
+/* Sedi */
+.sediGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.sedeCard {
+  padding: 14px 16px;
+  border: 1.5px solid var(--color-gray-100);
+  border-radius: var(--radius-md);
+}
+
+.sedeNome { font-weight: 600; font-size: .9rem; color: var(--color-primary); margin-bottom: 6px; }
+.sedeInfo { font-size: .8rem; color: var(--color-gray-600); margin-top: 3px; }
+
+/* Sidebar */
+.sidebar { position: sticky; top: 100px; }
+
+.priceCard {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.priceLabel {
+  font-size: .8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--color-gray-600);
+  margin-bottom: 8px;
+}
+
+.priceValue {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 20px;
+}
+
+.priceNA {
+  font-size: 1.1rem;
+  color: var(--color-gray-600);
+  margin-bottom: 20px;
+}
+
+.prenotaBtn {
+  width: 100%;
+  padding: 14px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-radius: 24px;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition);
+  margin-bottom: 10px;
+}
+.prenotaBtn:hover { background: var(--color-primary-dark); }
+
+.prenotaNote {
+  font-size: .75rem;
+  color: var(--color-gray-600);
+}
+
+/* Fondi */
+.fondiCard {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.fondiCard h3 {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 14px;
+}
+
+.fondiCard ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fondiCard li {
+  font-size: .875rem;
+  color: var(--color-gray-900);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fondoCheck {
+  color: var(--color-green);
+  font-weight: 700;
+}

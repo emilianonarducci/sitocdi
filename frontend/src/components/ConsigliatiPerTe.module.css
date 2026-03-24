@@ -1,0 +1,54 @@
+.section {
+  background: var(--color-primary);
+  padding: 28px 0;
+}
+
+.title {
+  color: rgba(255,255,255,.7);
+  font-size: .85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  transition: opacity var(--transition);
+}
+.card:hover { opacity: .85; }
+
+.cardImage {
+  width: 80px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.cardBody {
+  flex: 1;
+}
+
+.cardTitle {
+  color: var(--color-white);
+  font-size: .9rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.cardCta {
+  color: rgba(255,255,255,.7);
+  font-size: .8rem;
+  text-decoration: underline;
+}

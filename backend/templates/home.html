@@ -1,0 +1,559 @@
+{% extends "base.html" %}
+{% load cms_tags %}
+
+{% block title %}CDI - Centro Diagnostico Italiano{% endblock %}
+
+{% block content %}
+
+<style>
+    /* ── Hero ── */
+    .hero {
+        background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+        color: var(--color-white);
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        align-items: center;
+    }
+
+    .hero-badge {
+        display: inline-block;
+        background: rgba(255,255,255,.2);
+        border: 1px solid rgba(255,255,255,.3);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: .8rem;
+        font-weight: 600;
+        margin-bottom: 16px;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        line-height: 1.15;
+        margin-bottom: 16px;
+    }
+
+    .hero p {
+        font-size: 1.05rem;
+        opacity: .9;
+        margin-bottom: 32px;
+        line-height: 1.7;
+    }
+
+    .btn-primary {
+        display: inline-block;
+        padding: 14px 28px;
+        background: var(--color-white);
+        color: var(--color-primary);
+        border-radius: var(--radius-md);
+        font-weight: 700;
+        font-size: .95rem;
+        transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .btn-primary:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
+
+    .hero-image {
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        aspect-ratio: 4/3;
+        background: rgba(255,255,255,.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 5rem;
+    }
+
+    /* ── Search Bar ── */
+    .search-section {
+        background: var(--color-white);
+        padding: 0;
+        position: relative;
+        z-index: 10;
+    }
+
+    .search-card {
+        background: var(--color-white);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-lg);
+        padding: 32px 40px;
+        margin-top: -40px;
+        position: relative;
+    }
+
+    .search-card h2 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--color-primary);
+        margin-bottom: 8px;
+    }
+
+    .search-card p {
+        color: var(--color-gray-600);
+        font-size: .9rem;
+        margin-bottom: 24px;
+    }
+
+    .search-form {
+        display: grid;
+        grid-template-columns: 2fr 1.5fr 1fr auto;
+        gap: 12px;
+        align-items: end;
+    }
+
+    .search-field label {
+        display: block;
+        font-size: .8rem;
+        font-weight: 600;
+        color: var(--color-gray-600);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: .3px;
+    }
+
+    .search-field input,
+    .search-field select {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1.5px solid var(--color-gray-300);
+        border-radius: var(--radius-md);
+        font-size: .95rem;
+        font-family: var(--font-base);
+        color: var(--color-gray-900);
+        transition: border-color var(--transition);
+        background: var(--color-white);
+    }
+
+    .search-field input:focus,
+    .search-field select:focus {
+        outline: none;
+        border-color: var(--color-accent);
+    }
+
+    .btn-search {
+        padding: 12px 28px;
+        background: var(--color-primary);
+        color: var(--color-white);
+        border-radius: var(--radius-md);
+        font-weight: 700;
+        font-size: .95rem;
+        transition: background var(--transition);
+        white-space: nowrap;
+    }
+    .btn-search:hover { background: var(--color-primary-dark); }
+
+    /* ── Search Results ── */
+    .search-results {
+        margin-top: 24px;
+        display: none;
+    }
+
+    .search-results.visible { display: block; }
+
+    .results-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 16px;
+        margin-top: 12px;
+    }
+
+    .result-card {
+        border: 1.5px solid var(--color-gray-100);
+        border-radius: var(--radius-md);
+        padding: 16px;
+        transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .result-card:hover { border-color: var(--color-accent); box-shadow: var(--shadow-sm); }
+
+    .result-card h4 { font-size: .95rem; font-weight: 700; color: var(--color-primary); margin-bottom: 4px; }
+    .result-card .branca { font-size: .8rem; color: var(--color-gray-600); margin-bottom: 8px; }
+    .result-card .prezzo { font-size: 1rem; font-weight: 700; color: var(--color-accent); }
+    .result-card .fondi { font-size: .75rem; color: var(--color-green); margin-top: 4px; }
+
+    /* ── Services ── */
+    .services-section {
+        padding: 80px 0;
+        background: var(--color-gray-50);
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 32px;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--color-primary);
+    }
+
+    .section-subtitle {
+        color: var(--color-gray-600);
+        margin-top: 6px;
+        font-size: .95rem;
+    }
+
+    .btn-outline {
+        padding: 10px 22px;
+        border: 2px solid var(--color-primary);
+        border-radius: var(--radius-md);
+        color: var(--color-primary);
+        font-weight: 600;
+        font-size: .9rem;
+        transition: background var(--transition), color var(--transition);
+        background: transparent;
+    }
+    .btn-outline:hover { background: var(--color-primary); color: var(--color-white); }
+
+    .filter-tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 32px;
+        flex-wrap: wrap;
+    }
+
+    .filter-tab {
+        padding: 8px 18px;
+        border-radius: 20px;
+        font-size: .875rem;
+        font-weight: 500;
+        background: var(--color-white);
+        border: 1.5px solid var(--color-gray-300);
+        color: var(--color-gray-600);
+        transition: all var(--transition);
+    }
+    .filter-tab:hover,
+    .filter-tab.active {
+        background: var(--color-primary);
+        border-color: var(--color-primary);
+        color: var(--color-white);
+    }
+
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+
+    .service-card {
+        background: var(--color-white);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .service-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
+
+    .service-card-image {
+        height: 180px;
+        background: var(--color-accent-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+    }
+
+    .service-card-body { padding: 20px; }
+    .service-card-body h3 { font-size: 1.05rem; font-weight: 700; color: var(--color-primary); margin-bottom: 8px; }
+    .service-card-body p { font-size: .875rem; color: var(--color-gray-600); line-height: 1.6; margin-bottom: 16px; }
+    .service-card-body a { font-size: .875rem; font-weight: 600; color: var(--color-accent); }
+    .service-card-body a:hover { text-decoration: underline; }
+
+    /* ── Why Choose Us ── */
+    .why-section {
+        background: var(--color-primary);
+        color: var(--color-white);
+        padding: 80px 0;
+    }
+
+    .why-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: center;
+    }
+
+    .why-content h2 { font-size: 2rem; font-weight: 800; margin-bottom: 16px; }
+    .why-content p { opacity: .85; line-height: 1.7; font-size: 1rem; }
+
+    .why-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    .stat-card {
+        background: rgba(255,255,255,.1);
+        border: 1px solid rgba(255,255,255,.15);
+        border-radius: var(--radius-lg);
+        padding: 24px 16px;
+        text-align: center;
+        transition: background var(--transition);
+    }
+    .stat-card:hover { background: rgba(255,255,255,.15); }
+
+    .stat-icon { font-size: 2rem; margin-bottom: 12px; }
+    .stat-value { font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
+    .stat-label { font-size: .8rem; opacity: .75; line-height: 1.4; }
+
+    /* ── Reviews ── */
+    .reviews-section {
+        padding: 80px 0;
+        background: var(--color-white);
+    }
+
+    .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-top: 32px;
+    }
+
+    .review-card {
+        background: var(--color-gray-50);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+    }
+
+    .review-stars { color: #f59e0b; font-size: 1rem; margin-bottom: 12px; }
+    .review-text { font-size: .9rem; color: var(--color-gray-600); line-height: 1.7; margin-bottom: 16px; font-style: italic; }
+    .review-author { display: flex; align-items: center; gap: 12px; }
+    .review-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--color-accent-light); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--color-primary); font-size: .9rem; }
+    .review-name { font-weight: 600; font-size: .875rem; }
+    .review-date { font-size: .75rem; color: var(--color-gray-600); }
+
+    .trustpilot-badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 32px;
+        justify-content: center;
+        color: var(--color-gray-600);
+        font-size: .875rem;
+    }
+
+    .trustpilot-score {
+        background: #00b67a;
+        color: white;
+        padding: 4px 10px;
+        border-radius: var(--radius-sm);
+        font-weight: 700;
+    }
+</style>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-inner">
+            <div>
+                <span class="hero-badge">Novità</span>
+                <h1>50 anni CDI</h1>
+                <p>Il 21 marzo 1975 il Centro Diagnostico Italiano apriva le porte ai suoi primi pazienti. Da quel giorno sono passati cinquant'anni.</p>
+                <a href="#" class="btn-primary">Scopri di più</a>
+            </div>
+            <div class="hero-image">🏥</div>
+        </div>
+    </div>
+</section>
+
+<!-- Barra di ricerca/prenotazione -->
+<section class="search-section">
+    <div class="container">
+        <div class="search-card">
+            <h2>Prenota una visita o un esame</h2>
+            <p>Cerca l'esame o la prestazione, indica il centro e la data in cui vuoi effettuarla</p>
+            <form class="search-form" id="searchForm" onsubmit="searchPrestazioni(event)">
+                <div class="search-field">
+                    <label>Visita e Esame</label>
+                    <input type="text" id="searchQuery" placeholder="Es. visita cardiologica, ECG..." autocomplete="off">
+                </div>
+                <div class="search-field">
+                    <label>Sede e modalità di visita</label>
+                    <select id="searchStruttura">
+                        <option value="">Tutti i centri</option>
+                    </select>
+                </div>
+                <div class="search-field">
+                    <label>Data</label>
+                    <input type="date" id="searchData">
+                </div>
+                <button type="submit" class="btn-search">Cerca</button>
+            </form>
+
+            <div class="search-results" id="searchResults">
+                <p style="font-size:.85rem;color:var(--color-gray-600);margin-bottom:8px;" id="resultsCount"></p>
+                <div class="results-grid" id="resultsGrid"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Servizi -->
+<section class="services-section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Scopri i nostri servizi</h2>
+                <p class="section-subtitle">Uno staff di oltre 2000 persone tra medici specialisti, tecnici sanitari, infermieri e impiegati</p>
+            </div>
+            <a href="#" class="btn-outline">Inizia da qui</a>
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-tab active">Le più visitate</button>
+            <button class="filter-tab">Donna</button>
+            <button class="filter-tab">Bambini</button>
+            <button class="filter-tab">Senior</button>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-card-image">👨‍⚕️</div>
+                <div class="service-card-body">
+                    <h3>Visite specialistiche</h3>
+                    <p>Consulti con medici specialisti in tutte le principali branche della medicina.</p>
+                    <a href="#">Scopri di più →</a>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-card-image">🔬</div>
+                <div class="service-card-body">
+                    <h3>Radiologia e Diagnostica</h3>
+                    <p>Tecnologie avanzate per diagnosi precise: RX, TC, RM, ecografie e molto altro.</p>
+                    <a href="#">Scopri di più →</a>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-card-image">🏥</div>
+                <div class="service-card-body">
+                    <h3>Chirurgia</h3>
+                    <p>Interventi chirurgici in day surgery con équipe specializzate e tecnologie all'avanguardia.</p>
+                    <a href="#">Scopri di più →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Perché sceglierci -->
+<section class="why-section">
+    <div class="container">
+        <div class="why-inner">
+            <div class="why-content">
+                <h2>Perché sceglierci</h2>
+                <p>Ascoltare e comprendere le esigenze, ricercare con continuità la personalizzazione del "servizio" e offrire la migliore soluzione per soddisfarne le aspettative.</p>
+            </div>
+            <div class="why-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">💡</div>
+                    <div class="stat-value">Innovazione</div>
+                    <div class="stat-label">Tecnologie diagnostiche digitali e IA</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📍</div>
+                    <div class="stat-value">+80</div>
+                    <div class="stat-label">Centri in Lombardia</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-value">Eccellenza</div>
+                    <div class="stat-label">Clinica certificata</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recensioni -->
+<section class="reviews-section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Dicono di noi</h2>
+                <p class="section-subtitle">Le esperienze dei nostri pazienti</p>
+            </div>
+        </div>
+
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"Personale molto professionale e gentile. Ho fatto una consulenza neurologica e sono rimasta molto soddisfatta."</p>
+                <div class="review-author">
+                    <div class="review-avatar">ML</div>
+                    <div>
+                        <div class="review-name">Maria L.</div>
+                        <div class="review-date">15 febbraio 2026</div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"Ho fatto un intervento neurochirurgico in day surgery. Equipe eccellente, tempi rispettati, recupero veloce."</p>
+                <div class="review-author">
+                    <div class="review-avatar">GP</div>
+                    <div>
+                        <div class="review-name">Giorgio P.</div>
+                        <div class="review-date">3 marzo 2026</div>
+                    </div>
+                </div>
+            </div>
+            <div class="review-card">
+                <div class="review-stars">★★★★☆</div>
+                <p class="review-text">"Struttura moderna e pulita. Attese contenute e medici preparati. Lo consiglio a tutti."</p>
+                <div class="review-author">
+                    <div class="review-avatar">AR</div>
+                    <div>
+                        <div class="review-name">Anna R.</div>
+                        <div class="review-date">10 marzo 2026</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="trustpilot-badge">
+            <span class="trustpilot-score">4.7</span>
+            <span>★★★★★ su Trustpilot — oltre 2.400 recensioni verificate</span>
+        </div>
+    </div>
+</section>
+
+<!-- CMS Placeholder per contenuti editoriali -->
+{% placeholder "contenuto_editoriale" %}
+
+<script>
+async function searchPrestazioni(e) {
+    e.preventDefault();
+    const query = document.getElementById('searchQuery').value.trim();
+    if (!query) return;
+
+    const res = await fetch(`/api/prestazioni/search/?q=${encodeURIComponent(query)}`);
+    const data = await res.json();
+
+    const resultsDiv = document.getElementById('searchResults');
+    const countEl = document.getElementById('resultsCount');
+    const grid = document.getElementById('resultsGrid');
+
+    resultsDiv.classList.add('visible');
+    countEl.textContent = `${data.count} prestazioni trovate per "${query}"`;
+
+    grid.innerHTML = data.results.map(r => `
+        <div class="result-card">
+            <h4>${r.nome}</h4>
+            <div class="branca">${r.branca || ''}</div>
+            ${r.prezzo_solvente ? `<div class="prezzo">€ ${r.prezzo_solvente}</div>` : ''}
+            ${r.fondi?.length ? `<div class="fondi">✓ Coperta da: ${r.fondi.join(', ')}</div>` : ''}
+        </div>
+    `).join('');
+}
+</script>
+
+{% endblock %}
