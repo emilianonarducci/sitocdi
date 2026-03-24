@@ -4,6 +4,28 @@ from .models import Struttura, Fondo, Prestazione
 from .search import search_prestazioni
 
 
+def _struttura_to_dict(s, full=False):
+    d = {
+        "id": s.id,
+        "nome": s.nome,
+        "tipo": s.tipo,
+        "indirizzo": s.indirizzo,
+        "cap": s.cap,
+        "citta": s.citta,
+        "provincia": s.provincia,
+        "telefono": s.telefono,
+        "email": s.email,
+        "lat": s.lat,
+        "lng": s.lng,
+        "foto_url": s.foto_url,
+        "orari": s.orari,
+    }
+    if full:
+        d["descrizione"] = s.descrizione
+        d["servizi"] = [r.strip() for r in s.servizi.splitlines() if r.strip()]
+    return d
+
+
 def search_api(request):
     query = request.GET.get("q", "").strip()
     struttura = request.GET.get("struttura", None)
@@ -59,7 +81,7 @@ def suggestions_api(request):
 
 def prestazione_detail_api(request, pk):
     try:
-        p = Prestazione.objects.prefetch_related("strutture", "medici", "fondi").get(pk=pk, attiva=True)
+        p = Prestazione.objects.prefetch_related("strutture", "medici__scheda_cms", "fondi").get(pk=pk, attiva=True)
         return JsonResponse({
             "id": p.id,
             "nome": p.nome,
@@ -68,7 +90,7 @@ def prestazione_detail_api(request, pk):
             "descrizione": p.descrizione,
             "prezzo_solvente": float(p.prezzo_solvente) if p.prezzo_solvente else None,
             "strutture": [{"id": s.id, "nome": s.nome, "citta": s.citta, "indirizzo": s.indirizzo, "telefono": s.telefono} for s in p.strutture.all()],
-            "medici": [{"nome": m.nome_completo, "specializzazione": m.specializzazione} for m in p.medici.all()],
+            "medici": [{"nome": m.nome_completo, "specializzazione": m.specializzazione, "scheda_cms_id": m.scheda_cms.id if hasattr(m, "scheda_cms") else None} for m in p.medici.all()],
             "fondi": [{"nome": f.nome, "codice": f.codice} for f in p.fondi.all()],
         })
     except Prestazione.DoesNotExist:
@@ -76,8 +98,16 @@ def prestazione_detail_api(request, pk):
 
 
 def strutture_api(request):
-    strutture = Struttura.objects.filter(attiva=True).values("id", "nome", "citta", "tipo")
-    return JsonResponse({"results": list(strutture)})
+    strutture = Struttura.objects.filter(attiva=True)
+    return JsonResponse({"results": [_struttura_to_dict(s) for s in strutture]})
+
+
+def struttura_detail_api(request, pk):
+    try:
+        s = Struttura.objects.get(pk=pk, attiva=True)
+        return JsonResponse(_struttura_to_dict(s, full=True))
+    except Struttura.DoesNotExist:
+        return JsonResponse({"error": "Non trovata"}, status=404)
 
 
 def fondi_api(request):

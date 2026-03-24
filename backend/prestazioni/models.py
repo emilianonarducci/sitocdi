@@ -27,9 +27,19 @@ class Struttura(models.Model):
     nome = models.CharField(max_length=200)
     tipo = models.CharField(max_length=50, choices=TIPO_CHOICES, default="poliambulatorio")
     indirizzo = models.CharField(max_length=300, blank=True)
+    cap = models.CharField("CAP", max_length=10, blank=True)
     citta = models.CharField(max_length=100, blank=True)
+    provincia = models.CharField("Provincia", max_length=5, blank=True)
     telefono = models.CharField(max_length=20, blank=True)
     email = models.EmailField(blank=True)
+    descrizione = models.TextField("Descrizione", blank=True)
+    foto_url = models.URLField("URL foto", max_length=500, blank=True)
+    lat = models.FloatField("Latitudine", null=True, blank=True)
+    lng = models.FloatField("Longitudine", null=True, blank=True)
+    orari = models.JSONField("Orari", default=dict, blank=True,
+        help_text='Es: {"lun_ven": "07:00-20:00", "sab": "07:00-14:00", "dom": "Chiuso"}')
+    servizi = models.TextField("Servizi disponibili", blank=True,
+        help_text="Uno per riga: es. Radiologia, Cardiologia, ...")
     attiva = models.BooleanField(default=True)
 
     class Meta:

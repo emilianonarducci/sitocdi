@@ -1,0 +1,312 @@
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #003087 0%, #0052cc 100%);
+  color: white;
+  padding: 80px 24px 60px;
+  text-align: center;
+}
+
+.heroBadge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.heroName {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  margin: 0 0 12px;
+  line-height: 1.2;
+}
+
+.heroSpec {
+  font-size: clamp(16px, 2.5vw, 22px);
+  font-weight: 400;
+  opacity: 0.9;
+  margin: 0 0 8px;
+}
+
+.heroRuolo {
+  font-size: 15px;
+  opacity: 0.75;
+  margin: 0;
+  font-style: italic;
+}
+
+/* BODY */
+.body {
+  background: #f7f9fc;
+  padding: 48px 0 80px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 40px;
+  align-items: start;
+}
+
+/* MAIN */
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.bio {
+  background: white;
+  border-radius: 12px;
+  padding: 28px 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  font-size: 16px;
+  line-height: 1.7;
+  color: #444;
+}
+
+.section {
+  background: white;
+  border-radius: 12px;
+  padding: 28px 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #003087;
+  margin: 0 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sectionIcon {
+  font-size: 20px;
+}
+
+/* TIMELINE */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.timelineItem {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid #f0f0f0;
+  align-items: baseline;
+}
+
+.timelineItem:last-child {
+  border-bottom: none;
+}
+
+.timelineAnno {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0052cc;
+  white-space: nowrap;
+}
+
+.timelineTesto {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* PUBBLICAZIONI */
+.pubblicazioni {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pubblicazioni p {
+  font-size: 15px;
+  color: #444;
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 16px;
+  border-left: 3px solid #0052cc;
+}
+
+/* SIDEBAR */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 24px;
+}
+
+.fotoWrap {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  aspect-ratio: 3 / 4;
+}
+
+.foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.prenotaCard {
+  background: #003087;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.prenotaLabel {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  margin: 0 0 14px;
+}
+
+.prenotaBtn {
+  display: block;
+  background: white;
+  color: #003087;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 14px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.prenotaBtn:hover {
+  background: #f0f4ff;
+}
+
+.infoCard {
+  background: white;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.infoRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.4;
+}
+
+.infoIcon {
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* CTA BANNER */
+.ctaBanner {
+  background: #0052cc;
+  padding: 48px 24px;
+}
+
+.ctaBanner .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.ctaText {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.ctaBannerBtn {
+  background: white;
+  color: #003087;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 16px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.ctaBannerBtn:hover {
+  background: #e8f0fe;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero {
+    padding: 60px 20px 40px;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    order: -1;
+  }
+
+  .fotoWrap {
+    max-width: 260px;
+    margin: 0 auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .section,
+  .bio {
+    padding: 20px;
+  }
+
+  .timelineItem {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .ctaBanner .container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .ctaText {
+    font-size: 17px;
+  }
+}

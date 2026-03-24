@@ -17,6 +17,7 @@ export default function Header() {
           <nav>
             <ul className={styles.nav}>
               <li><a href="#">Servizi per te</a></li>
+              <li><a href="/sedi">I nostri centri</a></li>
               <li><a href="#">Salute per te</a></li>
               <li><a href="#">Chi siamo</a></li>
               <li><a href="#">Supporto</a></li>

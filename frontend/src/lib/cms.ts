@@ -1,4 +1,5 @@
-const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+// API_URL is server-only (Docker internal); NEXT_PUBLIC_API_URL is used on the client
+const API = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 export interface HeroSlide {
   id: number;
@@ -56,3 +57,29 @@ export const getHeroSlides = () => fetchCMS<HeroSlide[]>("hero/");
 export const getConsigliati = () => fetchCMS<ConsigliatiCard[]>("consigliati/");
 export const getPercheSceglierci = () => fetchCMS<PercheSceglierciData>("perche-sceglierci/");
 export const getSalutePerTe = () => fetchCMS<SalutePerTeArticolo[]>("salute-per-te/");
+
+export interface TitoloAccademico {
+  anno: string;
+  titolo: string;
+}
+
+export interface EsperienzaProfessionale {
+  anno: string;
+  descrizione: string;
+}
+
+export interface SchedaMedico {
+  id: number;
+  nome_completo: string;
+  specializzazione: string;
+  ruolo: string;
+  foto_url: string;
+  bio: string;
+  titoli_accademici: TitoloAccademico[];
+  esperienze_professionali: EsperienzaProfessionale[];
+  pubblicazioni: string;
+  link_prenota: string;
+}
+
+export const getMedici = () => fetchCMS<SchedaMedico[]>("medici/");
+export const getMedico = (id: number) => fetchCMS<SchedaMedico>(`medici/${id}/`);

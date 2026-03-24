@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from contenuto.models import (
     HeroSlide, ConsigliatiCard,
     PercheSceglierciSezione, PercheSceglierciCard,
-    SalutePerTeArticolo,
+    SalutePerTeArticolo, SchedaMedico,
 )
 
 
@@ -109,5 +109,77 @@ class Command(BaseCommand):
         for a in articoli:
             SalutePerTeArticolo.objects.get_or_create(titolo=a["titolo"], defaults=a)
         self.stdout.write(f"  ✓ {len(articoli)} articoli")
+
+        # ── Schede Medici ─────────────────────────────────────────
+        self.stdout.write("Creazione schede medici...")
+        medici = [
+            {
+                "nome_completo": "Dott.ssa Ileana Abbiati",
+                "specializzazione": "Ginecologia e Ostetricia",
+                "ruolo": "Dirigente Medico – Responsabile Ambulatorio Ginecologico",
+                "foto_url": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&q=80&auto=format&fit=crop",
+                "bio": (
+                    "La Dott.ssa Ileana Abbiati è specialista in Ginecologia e Ostetricia con oltre 20 anni "
+                    "di esperienza clinica. Si occupa di ginecologia preventiva, patologia cervicale, "
+                    "ecografia ostetrica e ginecologica, menopausa e contraccezione. Ha maturato una "
+                    "significativa esperienza in colposcopia e nel trattamento delle lesioni pre-neoplastiche "
+                    "della cervice uterina."
+                ),
+                "titoli_accademici": [
+                    {"anno": "1990", "titolo": "Laurea in Medicina e Chirurgia – Università degli Studi di Milano, con lode"},
+                    {"anno": "1994", "titolo": "Specializzazione in Ginecologia e Ostetricia – Università degli Studi di Milano"},
+                    {"anno": "1996", "titolo": "Master in Ecografia Ostetrica e Ginecologica – Fondazione IRCCS Policlinico"},
+                    {"anno": "2002", "titolo": "Diploma in Colposcopia avanzata – Società Italiana di Colposcopia e Patologia Cervico-Vaginale (SICPCV)"},
+                ],
+                "esperienze_professionali": [
+                    {"anno": "2005 – presente", "descrizione": "Dirigente Medico e Responsabile Ambulatorio Ginecologico – CDI Centro Diagnostico Italiano, Milano"},
+                    {"anno": "1999 – 2005", "descrizione": "Medico Specialista – IRCCS Istituto Europeo di Oncologia (IEO), Unità di Ginecologia Oncologica"},
+                    {"anno": "1994 – 1999", "descrizione": "Medico in formazione specialistica – U.O. Ginecologia e Ostetricia, Ospedale San Raffaele, Milano"},
+                ],
+                "pubblicazioni": (
+                    "Abbiati I. et al. - Colposcopia e lesioni CIN2+: follow-up a 5 anni in pazienti trattate con LEEP"
+                    " - Giornale Italiano di Ostetricia e Ginecologia, 2008.\n"
+                    "Abbiati I., Rossi M. - Ecografia tridimensionale nella diagnosi delle malformazioni uterine"
+                    " - Journal of Obstetrics and Gynaecology Research, 2012.\n"
+                    "Partecipazione come relatore al Congresso Nazionale SIGO 2015 e 2019."
+                ),
+                "link_prenota": "/cerca?branca=ginecologia",
+                "attivo": True,
+                "ordine": 0,
+            },
+            {
+                "nome_completo": "Dott. Marco Ferrari",
+                "specializzazione": "Cardiologia",
+                "ruolo": "Responsabile Unità Diagnostica Cardiologica",
+                "foto_url": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80&auto=format&fit=crop",
+                "bio": (
+                    "Il Dott. Marco Ferrari è cardiologo con specializzazione in diagnostica non invasiva. "
+                    "Si occupa di ecocardiografia, holter cardiaco, ergometria e prevenzione cardiovascolare. "
+                    "Ha una lunga esperienza nel trattamento delle cardiopatie coronariche e nello scompenso cardiaco."
+                ),
+                "titoli_accademici": [
+                    {"anno": "1988", "titolo": "Laurea in Medicina e Chirurgia – Università degli Studi di Pavia"},
+                    {"anno": "1992", "titolo": "Specializzazione in Cardiologia – Università degli Studi di Milano"},
+                    {"anno": "1995", "titolo": "Fellowship in Ecocardiografia Avanzata – Centro Cardiologico Monzino"},
+                ],
+                "esperienze_professionali": [
+                    {"anno": "2008 – presente", "descrizione": "Responsabile Unità Diagnostica Cardiologica – CDI Centro Diagnostico Italiano"},
+                    {"anno": "1998 – 2008", "descrizione": "Dirigente Medico – U.O. Cardiologia, Ospedale Niguarda Ca' Granda, Milano"},
+                    {"anno": "1992 – 1998", "descrizione": "Medico Specialista in Cardiologia – Istituto Clinico Humanitas"},
+                ],
+                "pubblicazioni": (
+                    "Ferrari M. et al. - Valore prognostico dell'ecocardiografia da stress nella cardiopatia ischemica stabile"
+                    " - European Journal of Echocardiography, 2005.\n"
+                    "Ferrari M. - Prevenzione cardiovascolare primaria: esperienza CDI su 3000 pazienti"
+                    " - Atti del 75 Congresso Nazionale della Societa Italiana di Cardiologia, 2014."
+                ),
+                "link_prenota": "/cerca?branca=cardiologia",
+                "attivo": True,
+                "ordine": 1,
+            },
+        ]
+        for m in medici:
+            SchedaMedico.objects.get_or_create(nome_completo=m["nome_completo"], defaults=m)
+        self.stdout.write(f"  ✓ {len(medici)} schede medici")
 
         self.stdout.write(self.style.SUCCESS("\nCMS popolato con successo!"))

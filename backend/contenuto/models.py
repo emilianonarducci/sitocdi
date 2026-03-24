@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import JSONField
 
 
 class HeroSlide(models.Model):
@@ -94,3 +95,44 @@ class SalutePerTeArticolo(models.Model):
 
     def __str__(self):
         return f"[{self.tab}] {self.titolo}"
+
+
+class SchedaMedico(models.Model):
+    medico = models.OneToOneField(
+        "prestazioni.Medico",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="scheda_cms",
+        verbose_name="Medico collegato",
+        help_text="Collega questa scheda al medico nel catalogo prestazioni",
+    )
+    nome_completo = models.CharField("Nome completo", max_length=200, help_text="Es: Dott.ssa Ileana Abbiati")
+    specializzazione = models.CharField("Specializzazione", max_length=300, help_text="Es: Ginecologia e Ostetricia")
+    ruolo = models.CharField("Ruolo / Qualifica", max_length=300, blank=True, help_text="Es: Dirigente Medico - Responsabile ambulatorio")
+    foto_url = models.URLField("URL foto", max_length=500, blank=True)
+    bio = models.TextField("Biografia / Presentazione", blank=True, help_text="Testo introduttivo visualizzato nella scheda")
+    titoli_accademici = JSONField(
+        "Titoli accademici",
+        default=list,
+        blank=True,
+        help_text='Lista JSON: [{"anno": "2005", "titolo": "Specializzazione in Ginecologia"}, ...]',
+    )
+    esperienze_professionali = JSONField(
+        "Esperienze professionali",
+        default=list,
+        blank=True,
+        help_text='Lista JSON: [{"anno": "2010 - presente", "descrizione": "Dirigente medico CDI"}, ...]',
+    )
+    pubblicazioni = models.TextField("Pubblicazioni e Ricerca", blank=True, help_text="Testo libero su pubblicazioni e attività di ricerca")
+    link_prenota = models.CharField("Link prenota", max_length=200, default="/cerca", blank=True)
+    attivo = models.BooleanField("Attivo", default=True)
+    ordine = models.PositiveIntegerField("Ordine", default=0)
+
+    class Meta:
+        ordering = ["ordine", "nome_completo"]
+        verbose_name = "Scheda Medico"
+        verbose_name_plural = "Schede Medici"
+
+    def __str__(self):
+        return self.nome_completo

@@ -2,12 +2,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from prestazioni.views import search_api, strutture_api, fondi_api, suggestions_api, prestazione_detail_api
+from prestazioni.views import search_api, strutture_api, struttura_detail_api, fondi_api, suggestions_api, prestazione_detail_api
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/prestazioni/search/", search_api, name="prestazioni-search"),
     path("api/strutture/", strutture_api, name="strutture"),
+    path("api/strutture/<int:pk>/", struttura_detail_api, name="struttura-detail"),
     path("api/fondi/", fondi_api, name="fondi"),
     path("api/prestazioni/suggestions/", suggestions_api, name="suggestions"),
     path("api/prestazioni/<int:pk>/", prestazione_detail_api, name="prestazione-detail"),

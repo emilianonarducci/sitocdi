@@ -54,7 +54,7 @@ export interface PrestazioneDetail {
   descrizione: string;
   prezzo_solvente: number | null;
   strutture: { id: number; nome: string; citta: string; indirizzo: string; telefono: string }[];
-  medici: { nome: string; specializzazione: string }[];
+  medici: { nome: string; specializzazione: string; scheda_cms_id: number | null }[];
   fondi: { nome: string; codice: string }[];
 }
 
@@ -69,4 +69,44 @@ export async function getStrutture(): Promise<Struttura[]> {
   if (!res.ok) return [];
   const data = await res.json();
   return data.results;
+}
+
+export interface Sede {
+  id: number;
+  nome: string;
+  tipo: string;
+  indirizzo: string;
+  cap: string;
+  citta: string;
+  provincia: string;
+  telefono: string;
+  email: string;
+  lat: number | null;
+  lng: number | null;
+  foto_url: string;
+  orari: Record<string, string>;
+}
+
+export interface SedeDetail extends Sede {
+  descrizione: string;
+  servizi: string[];
+}
+
+const SERVER_API = process.env.API_URL ?? API_URL;
+
+export async function getSedi(): Promise<Sede[]> {
+  try {
+    const res = await fetch(`${SERVER_API}/api/strutture/`, { next: { revalidate: 300 } });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.results;
+  } catch { return []; }
+}
+
+export async function getSedeDetail(id: number): Promise<SedeDetail | null> {
+  try {
+    const res = await fetch(`${SERVER_API}/api/strutture/${id}/`, { next: { revalidate: 300 } });
+    if (!res.ok) return null;
+    return res.json();
+  } catch { return null; }
 }

@@ -44,10 +44,15 @@ export default function PrestazioneDetailPage() {
                       <div className={styles.medicoAvatar}>
                         {m.nome.charAt(m.nome.indexOf(" ") + 1) || m.nome.charAt(0)}
                       </div>
-                      <div>
+                      <div className={styles.medicoInfo}>
                         <div className={styles.medicoNome}>{m.nome}</div>
                         <div className={styles.medicoSpec}>{m.specializzazione}</div>
                       </div>
+                      {m.scheda_cms_id && (
+                        <a href={`/medici/${m.scheda_cms_id}`} className={styles.medicoProfileLink}>
+                          Vedi scheda →
+                        </a>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -64,6 +69,7 @@ export default function PrestazioneDetailPage() {
                       <div className={styles.sedeNome}>{s.nome}</div>
                       <div className={styles.sedeInfo}>📍 {s.indirizzo}, {s.citta}</div>
                       {s.telefono && <div className={styles.sedeInfo}>📞 {s.telefono}</div>}
+                      <a href={`/sedi/${s.id}`} className={styles.sedeLink}>Vedi sede →</a>
                     </div>
                   ))}
                 </div>

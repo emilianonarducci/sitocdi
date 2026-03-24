@@ -1,0 +1,595 @@
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero {
+  position: relative;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1800&q=80&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center 30%;
+  overflow: hidden;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,48,135,.88) 0%, rgba(0,82,204,.72) 60%, rgba(0,48,135,.6) 100%);
+}
+
+.heroContent {
+  position: relative;
+  text-align: center;
+  color: white;
+  padding: 80px 24px 60px;
+  max-width: 760px;
+}
+
+.heroBadge {
+  display: inline-block;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.35);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 6px 18px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+
+.heroTitle {
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 18px;
+  letter-spacing: -1px;
+}
+
+.heroSub {
+  font-size: clamp(15px, 2vw, 18px);
+  opacity: .88;
+  line-height: 1.65;
+  margin: 0 0 48px;
+  max-width: 580px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.heroStats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  background: rgba(255,255,255,.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 16px;
+  padding: 20px 32px;
+  flex-wrap: wrap;
+}
+
+.heroStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 32px;
+}
+
+.heroStatNum {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.heroStatLabel {
+  font-size: 12px;
+  opacity: .75;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.heroStatDiv {
+  width: 1px;
+  height: 40px;
+  background: rgba(255,255,255,.25);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════
+   PROVINCE BAND
+═══════════════════════════════════════ */
+.provinceBand {
+  background: #003087;
+  padding: 14px 24px;
+}
+
+.provinceInner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.provinceLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,.65);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-right: 6px;
+}
+
+.provinceTag {
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 4px 14px;
+  border-radius: 20px;
+}
+
+/* ═══════════════════════════════════════
+   CARD GRID
+═══════════════════════════════════════ */
+.gridSection {
+  background: #f7f9fc;
+  padding: 72px 0 80px;
+}
+
+.gridInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.gridHeader {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.gridTitle {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 800;
+  color: #003087;
+  margin: 0 0 12px;
+}
+
+.gridSub {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+
+/* SEDE CARD */
+.sedeCard {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s, box-shadow .2s;
+  border: 2px solid transparent;
+}
+
+.sedeCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,48,135,.15);
+  border-color: #e0eaff;
+}
+
+.sedeCardImgWrap {
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+}
+
+.sedeCardImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .35s;
+  display: block;
+}
+
+.sedeCard:hover .sedeCardImg {
+  transform: scale(1.04);
+}
+
+.sedeCardImgPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #003087 0%, #0052cc 100%);
+}
+
+.sedeCardCitta {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  background: rgba(0,48,135,.85);
+  backdrop-filter: blur(4px);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.sedeCardBody {
+  padding: 20px 22px 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sedeCardNome {
+  font-size: 18px;
+  font-weight: 700;
+  color: #003087;
+  margin: 0 0 4px;
+}
+
+.sedeCardAddr,
+.sedeCardOrari,
+.sedeCardTel {
+  font-size: 13px;
+  color: #555;
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.sedeCardAddrIcon { flex-shrink: 0; font-size: 14px; }
+
+.sedeCardCta {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0052cc;
+  letter-spacing: .2px;
+}
+
+.sedeCardTipoBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: white;
+  color: #003087;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.2);
+}
+
+/* ─── PUNTI PRELIEVI GRID ─────────────────────────── */
+.prelievoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.prelievoCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: white;
+  border: 2px solid #e8eef8;
+  border-radius: 12px;
+  padding: 16px 18px;
+  text-decoration: none;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+
+.prelievoCard:hover {
+  border-color: #0052cc;
+  box-shadow: 0 4px 14px rgba(0,48,135,.1);
+  transform: translateY(-2px);
+}
+
+.prelievoIcon {
+  font-size: 24px;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  background: #fef2f2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prelievoBody { flex: 1; min-width: 0; }
+
+.prelievoNome {
+  font-size: 14px;
+  font-weight: 700;
+  color: #003087;
+  margin: 0 0 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prelievoAddr,
+.prelievoOrari,
+.prelievoTel {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prelievoArrow {
+  font-size: 16px;
+  color: #0052cc;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════
+   STORE LOCATOR
+═══════════════════════════════════════ */
+.locatorSection {
+  background: white;
+  border-top: 1px solid #edf0f5;
+}
+
+.locatorHeader {
+  text-align: center;
+  padding: 56px 24px 32px;
+}
+
+.locatorTitle {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 800;
+  color: #003087;
+  margin: 0 0 8px;
+}
+
+.locatorSub {
+  font-size: 15px;
+  color: #666;
+  margin: 0;
+}
+
+/* Locator layout (shared with SediPageClient) */
+.locatorStack {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #edf0f5;
+}
+
+.locatorSearchBar {
+  padding: 16px 24px;
+  background: white;
+  border-bottom: 1px solid #edf0f5;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Keep old locatorLayout name in case it's referenced elsewhere */
+.locatorLayout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  height: 560px;
+  border-top: 1px solid #edf0f5;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background: #f7f9fc;
+  border-right: 1px solid #e8ecf0;
+  overflow: hidden;
+}
+
+.sidebarHeader {
+  padding: 16px;
+  border-bottom: 1px solid #e8ecf0;
+  background: white;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1.5px solid #dde2e8;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color .15s;
+}
+.searchInput:focus { border-color: #003087; }
+
+.count {
+  font-size: 13px;
+  color: #888;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sidebarList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sedeCardSidebar {
+  background: white;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color .15s, box-shadow .15s;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.sedeCardSidebar:hover { border-color: #c0cfe8; box-shadow: 0 3px 10px rgba(0,48,135,.1); }
+.sedeCardSidebarActive { border-color: #003087 !important; box-shadow: 0 4px 14px rgba(0,48,135,.18) !important; }
+
+.sedeCardSidebarImg {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  display: block;
+}
+
+.sedeCardSidebarBody {
+  padding: 10px 12px 12px;
+}
+
+.sedeCardSidebarBadge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: #0052cc;
+  background: #e8f0fe;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.sedeCardSidebarNome {
+  font-size: 14px;
+  font-weight: 700;
+  color: #003087;
+  margin: 0 0 3px;
+}
+
+.sedeCardSidebarAddr { font-size: 12px; color: #555; margin: 0 0 2px; }
+.sedeCardSidebarOrari { font-size: 11px; color: #777; margin: 0 0 7px; }
+
+.sedeCardSidebarLink {
+  font-size: 11px;
+  font-weight: 600;
+  color: #0052cc;
+  text-decoration: none;
+}
+.sedeCardSidebarLink:hover { text-decoration: underline; }
+
+.noResults {
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+  padding: 40px 0;
+}
+
+.mapWrap {
+  position: relative;
+  overflow: hidden;
+  height: 560px;
+}
+
+.mapLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #888;
+  font-size: 15px;
+  background: #f0f4f8;
+}
+
+/* ═══════════════════════════════════════
+   CTA
+═══════════════════════════════════════ */
+.ctaSection {
+  background: linear-gradient(135deg, #003087 0%, #0052cc 100%);
+  padding: 72px 24px;
+  text-align: center;
+}
+
+.ctaInner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.ctaTitle {
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 800;
+  color: white;
+  margin: 0 0 12px;
+}
+
+.ctaSub {
+  font-size: 16px;
+  color: rgba(255,255,255,.8);
+  margin: 0 0 32px;
+  line-height: 1.6;
+}
+
+.ctaBtn {
+  display: inline-block;
+  background: white;
+  color: #003087;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 16px 36px;
+  border-radius: 40px;
+  text-decoration: none;
+  letter-spacing: .3px;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(0,0,0,.2);
+}
+.ctaBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media (max-width: 900px) {
+  .heroStats { gap: 0; padding: 16px 16px; }
+  .heroStat { padding: 8px 16px; }
+  .heroStatDiv { height: 30px; }
+  .cardGrid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+}
+
+@media (max-width: 768px) {
+  .hero { min-height: 400px; }
+  .heroStats { flex-wrap: wrap; gap: 8px; padding: 16px; }
+  .heroStatDiv { display: none; }
+  .heroStat { padding: 8px 20px; }
+
+  .mapWrap { height: 400px; }
+  .locatorSearchBar { padding: 12px 16px; }
+
+  .cardGrid { grid-template-columns: 1fr; }
+  .prelievoGrid { grid-template-columns: 1fr; }
+}
