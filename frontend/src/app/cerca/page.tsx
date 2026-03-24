@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { searchPrestazioni, type Prestazione } from "@/lib/api";
 import styles from "./page.module.css";
 
-export default function CercaPage() {
+function CercaContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const q = searchParams.get("q") || "";
@@ -77,5 +77,13 @@ export default function CercaPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function CercaPage() {
+  return (
+    <Suspense fallback={<div style={{ padding: "80px", textAlign: "center" }}>Caricamento...</div>}>
+      <CercaContent />
+    </Suspense>
   );
 }
