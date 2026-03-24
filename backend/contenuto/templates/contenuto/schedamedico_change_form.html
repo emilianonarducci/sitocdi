@@ -1,0 +1,11 @@
+{% extends "admin/change_form.html" %}
+
+{% block content_title %}
+{{ block.super }}
+<div style="margin-bottom:16px;">
+  <a href="{{ upload_cv_url }}"
+     style="display:inline-block;background:#003087;color:white;padding:10px 20px;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none;">
+    &#8679; Importa scheda da CV (PDF / DOC / DOCX)
+  </a>
+</div>
+{% endblock %}

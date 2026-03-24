@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from .models import HeroSlide, ConsigliatiCard, PercheSceglierciSezione, PercheSceglierciCard, SalutePerTeArticolo, SchedaMedico
 
 
@@ -35,10 +36,27 @@ class SalutePerTeArticoloAdmin(admin.ModelAdmin):
 
 @admin.register(SchedaMedico)
 class SchedaMedicoAdmin(admin.ModelAdmin):
-    list_display = ("nome_completo", "specializzazione", "ordine", "attivo")
+    list_display = ("nome_completo", "specializzazione", "ordine", "attivo", "importa_cv_link")
     list_editable = ("ordine", "attivo")
     list_filter = ("attivo",)
     search_fields = ("nome_completo", "specializzazione")
+
+    @admin.display(description="")
+    def importa_cv_link(self, obj):
+        return format_html('<a href="/api/cms/upload-cv/" style="white-space:nowrap">+ Importa CV</a>')
+
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        extra_context["upload_cv_url"] = "/api/cms/upload-cv/"
+        return super().changelist_view(request, extra_context=extra_context)
+
+    def changeform_view(self, request, object_id=None, form_url="", extra_context=None):
+        extra_context = extra_context or {}
+        extra_context["upload_cv_url"] = "/api/cms/upload-cv/"
+        return super().changeform_view(request, object_id, form_url, extra_context)
+
+    change_form_template = "contenuto/schedamedico_change_form.html"
+
     fieldsets = (
         ("Dati principali", {
             "fields": ("nome_completo", "specializzazione", "ruolo", "foto_url", "bio", "link_prenota", "attivo", "ordine"),

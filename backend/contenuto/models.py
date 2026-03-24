@@ -136,3 +136,32 @@ class SchedaMedico(models.Model):
 
     def __str__(self):
         return self.nome_completo
+
+
+class CVImportJob(models.Model):
+    STATUS_PENDING = "pending"
+    STATUS_PROCESSING = "processing"
+    STATUS_DONE = "done"
+    STATUS_ERROR = "error"
+    STATUS_CHOICES = [
+        (STATUS_PENDING, "In attesa"),
+        (STATUS_PROCESSING, "In elaborazione"),
+        (STATUS_DONE, "Completato"),
+        (STATUS_ERROR, "Errore"),
+    ]
+
+    status = models.CharField("Stato", max_length=20, choices=STATUS_CHOICES, default=STATUS_PENDING)
+    filename = models.CharField("Nome file", max_length=255)
+    error_message = models.TextField("Messaggio errore", blank=True)
+    scheda = models.ForeignKey(
+        SchedaMedico, null=True, blank=True, on_delete=models.SET_NULL, related_name="import_jobs"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Job importazione CV"
+        verbose_name_plural = "Job importazioni CV"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"Job #{self.id} - {self.filename} [{self.status}]"

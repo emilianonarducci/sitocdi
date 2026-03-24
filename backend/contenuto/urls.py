@@ -8,4 +8,6 @@ urlpatterns = [
     path("salute-per-te/", views.salute_per_te_api),
     path("medici/", views.medici_list_api),
     path("medici/<int:pk>/", views.medico_detail_api),
+    path("upload-cv/", views.upload_cv_pdf, name="upload_cv_pdf"),
+    path("upload-cv/status/<int:job_id>/", views.cv_import_status, name="cv_import_status"),
 ]

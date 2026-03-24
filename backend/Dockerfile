@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcairo2-dev \
     pkg-config \
     python3-dev \
+    antiword \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
