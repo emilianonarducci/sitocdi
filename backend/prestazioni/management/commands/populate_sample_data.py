@@ -228,7 +228,11 @@ class Command(BaseCommand):
             },
         ]
 
-        create_index()
+        # Tenta di creare l'indice OpenSearch (ignorato se non disponibile)
+        try:
+            create_index()
+        except Exception:
+            self.stdout.write("  ⚠ OpenSearch non disponibile, uso solo PostgreSQL")
 
         for data in prestazioni_data:
             p, created = Prestazione.objects.get_or_create(
@@ -245,7 +249,10 @@ class Command(BaseCommand):
                 p.strutture.set([strutture[s] for s in data["strutture"]])
                 p.medici.set([medici[m] for m in data["medici"]])
                 p.fondi.set([fondi[f] for f in data["fondi"]])
-                index_prestazione(p)
+                try:
+                    index_prestazione(p)
+                except Exception:
+                    pass
                 self.stdout.write(f"  ✓ {p.nome}")
             else:
                 self.stdout.write(f"  — già esistente: {p.nome}")
