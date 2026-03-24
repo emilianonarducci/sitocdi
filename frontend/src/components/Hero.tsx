@@ -1,67 +1,44 @@
 "use client";
 import { useState } from "react";
 import styles from "./Hero.module.css";
+import type { HeroSlide } from "@/lib/cms";
 
-const slides = [
+const FALLBACK: HeroSlide[] = [
   {
-    badge: "Novità",
-    title: "50 anni CDI",
-    text: "Il 21 marzo 1975 il Centro Diagnostico Italiano apriva le porte ai suoi primi pazienti. Da quel giorno sono passati cinquant'anni.",
-    cta: "Scopri di più",
-    image: "https://www.cdi.it/wp-content/uploads/2025/05/CDI_Slider_Cinquantesimo-scaled.jpg",
-  },
-  {
-    badge: "Diagnostica",
-    title: "Tecnologie all'avanguardia",
-    text: "RX, TC, RM, ecografie e molto altro. Strumenti digitali per diagnosi precise e veloci.",
-    cta: "Scopri i servizi",
-    image: "https://www.cdi.it/wp-content/uploads/2024/12/2-Screening-gravidanza-cdi.jpg",
-  },
-  {
-    badge: "Prenotazione",
-    title: "Prenota online",
-    text: "Trova la prestazione, scegli il centro e la data. Semplice, veloce, vicino a te.",
-    cta: "Prenota ora",
-    image: "https://www.cdi.it/wp-content/uploads/2025/02/CDI_VECTRA_Banner-scaled.jpg",
+    id: 1,
+    badge: "CDI — Dal 1975",
+    titolo: "La tua salute,\nla nostra missione.",
+    sottotitolo: "Oltre 80 centri in Lombardia. Prenota visite, esami e prestazioni mediche con i migliori specialisti.",
+    cta_testo: "Prenota ora",
+    cta_link: "/cerca",
+    immagine_url: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=80&auto=format&fit=crop",
   },
 ];
 
-export default function Hero() {
+export default function Hero({ slides: initialSlides }: { slides?: HeroSlide[] | null }) {
+  const slides = initialSlides?.length ? initialSlides : FALLBACK;
   const [current, setCurrent] = useState(0);
-
-  const prev = () => setCurrent((c) => (c === 0 ? slides.length - 1 : c - 1));
-  const next = () => setCurrent((c) => (c === slides.length - 1 ? 0 : c + 1));
-
   const slide = slides[current];
 
   return (
     <section className={styles.hero}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={slide.image} alt="" className={styles.bgImage} />
+      <img src={slide.immagine_url} alt="" className={styles.bgImage} />
       <div className={styles.overlay} />
-
       <div className={styles.content}>
         <span className={styles.badge}>{slide.badge}</span>
-        <h1>{slide.title}</h1>
-        <p>{slide.text}</p>
-        <a href="#" className={styles.cta}>
-          {slide.cta} →
-        </a>
+        <h1>{slide.titolo}</h1>
+        <p>{slide.sottotitolo}</p>
+        <a href={slide.cta_link} className={styles.cta}>{slide.cta_testo}</a>
       </div>
-
       <div className={styles.nav}>
-        <button className={styles.arrow} onClick={prev} aria-label="Precedente">←</button>
+        <button className={styles.arrow} onClick={() => setCurrent((c) => (c - 1 + slides.length) % slides.length)}>←</button>
         <div className={styles.dots}>
           {slides.map((_, i) => (
-            <button
-              key={i}
-              className={`${styles.dot} ${i === current ? styles.dotActive : ""}`}
-              onClick={() => setCurrent(i)}
-              aria-label={`Slide ${i + 1}`}
-            />
+            <button key={i} className={`${styles.dot} ${i === current ? styles.dotActive : ""}`} onClick={() => setCurrent(i)} />
           ))}
         </div>
-        <button className={styles.arrow} onClick={next} aria-label="Successivo">→</button>
+        <button className={styles.arrow} onClick={() => setCurrent((c) => (c + 1) % slides.length)}>→</button>
       </div>
     </section>
   );

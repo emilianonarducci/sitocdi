@@ -5,21 +5,23 @@ import PercheSceglierci from "@/components/PercheSceglierci";
 import SalutePerTe from "@/components/SalutePerTe";
 import Newsletter from "@/components/Newsletter";
 import AppDownload from "@/components/AppDownload";
+import { getHeroSlides, getConsigliati, getPercheSceglierci, getSalutePerTe } from "@/lib/cms";
 import styles from "./page.module.css";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [heroSlides, consigliati, percheSceglierci, salutePerTe] = await Promise.all([
+    getHeroSlides(),
+    getConsigliati(),
+    getPercheSceglierci(),
+    getSalutePerTe(),
+  ]);
+
   return (
     <>
-      {/* Hero full-width con carousel */}
-      <Hero />
-
-      {/* Consigliati per te */}
-      <ConsigliatiPerTe />
-
-      {/* Prenota una visita */}
+      <Hero slides={heroSlides} />
+      <ConsigliatiPerTe cards={consigliati} />
       <SearchBar />
 
-      {/* Servizi */}
       <section className={styles.services}>
         <div className="container">
           <div className={styles.sectionHeader}>
@@ -40,21 +42,9 @@ export default function HomePage() {
 
           <div className={styles.servicesGrid}>
             {[
-              {
-                img: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80&auto=format&fit=crop",
-                title: "Visite specialistiche",
-                desc: "Consulti con medici specialisti in tutte le principali branche della medicina.",
-              },
-              {
-                img: "https://images.unsplash.com/photo-1516069677018-378515003435?w=600&q=80&auto=format&fit=crop",
-                title: "Radiologia e Diagnostica",
-                desc: "Tecnologie avanzate per diagnosi precise: RX, TC, RM, ecografie e molto altro.",
-              },
-              {
-                img: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=600&q=80&auto=format&fit=crop",
-                title: "Chirurgia",
-                desc: "Interventi chirurgici in day surgery con équipe specializzate e tecnologie all'avanguardia.",
-              },
+              { img: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80&auto=format&fit=crop", title: "Visite specialistiche", desc: "Consulti con medici specialisti in tutte le principali branche della medicina." },
+              { img: "https://images.unsplash.com/photo-1516069677018-378515003435?w=600&q=80&auto=format&fit=crop", title: "Radiologia e Diagnostica", desc: "Tecnologie avanzate per diagnosi precise: RX, TC, RM, ecografie e molto altro." },
+              { img: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=600&q=80&auto=format&fit=crop", title: "Chirurgia", desc: "Interventi chirurgici in day surgery con équipe specializzate e tecnologie all'avanguardia." },
             ].map((s) => (
               <div key={s.title} className={styles.serviceCard}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -70,10 +60,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Perché sceglierci */}
-      <PercheSceglierci />
+      <PercheSceglierci data={percheSceglierci} />
 
-      {/* Recensioni */}
       <section className={styles.reviews}>
         <div className="container">
           <div className={styles.sectionHeader}>
@@ -108,13 +96,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Salute per te */}
-      <SalutePerTe />
-
-      {/* Newsletter */}
+      <SalutePerTe articoli={salutePerTe} />
       <Newsletter />
-
-      {/* App Download */}
       <AppDownload />
     </>
   );

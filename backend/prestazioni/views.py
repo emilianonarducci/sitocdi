@@ -17,8 +17,16 @@ def search_api(request):
         return JsonResponse({"count": len(results), "results": results})
     except Exception:
         # Fallback su PostgreSQL se OpenSearch non è disponibile
+        # Cerca ogni parola con AND: tutte devono essere presenti in nome o descrizione
+        from functools import reduce
+        import operator as op
+        words = query.split()
+        word_filters = [
+            Q(nome__icontains=w) | Q(descrizione__icontains=w)
+            for w in words
+        ]
         qs = Prestazione.objects.filter(attiva=True).filter(
-            Q(nome__icontains=query) | Q(descrizione__icontains=query)
+            reduce(op.and_, word_filters)
         ).prefetch_related("strutture", "medici", "fondi")[:10]
         results = [
             {

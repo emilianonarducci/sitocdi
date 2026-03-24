@@ -1,6 +1,8 @@
+import React from "react";
 import styles from "./PercheSceglierci.module.css";
+import type { PercheSceglierciData } from "@/lib/cms";
 
-const cards = [
+const FALLBACK_CARDS = [
   {
     variant: "light",
     icon: (
@@ -44,44 +46,41 @@ const cards = [
   },
 ];
 
-export default function PercheSceglierci() {
+export default function PercheSceglierci({ data }: { data?: PercheSceglierciData | null }) {
+  const titolo = data?.titolo ?? "Perché sceglierci";
+  const descrizione = data?.descrizione ?? "Ascoltare e comprenderne le esigenze, ricercare con continuità la personalizzazione del \"servizio\" e offrire la migliore soluzione per soddisfarne le aspettative.";
+  const bgImg = data?.immagine_sfondo_url ?? "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=80&auto=format&fit=crop";
+  const cards = data?.cards?.length ? data.cards : FALLBACK_CARDS;
+
   return (
     <section className={styles.section}>
-      {/* Immagine di sfondo */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=80&auto=format&fit=crop"
-        alt=""
-        className={styles.bgImg}
-      />
-      {/* Overlay gradiente */}
+      <img src={bgImg} alt="" className={styles.bgImg} />
       <div className={styles.overlay} />
 
-      {/* Contenuto */}
       <div className={styles.inner}>
-        {/* Testo in alto a sinistra */}
         <div className={styles.textBlock}>
-          <h2>Perché sceglierci</h2>
-          <p>
-            Ascoltare e comprenderne le esigenze, ricercare con continuità la
-            personalizzazione del &quot;servizio&quot; e offrire la migliore soluzione
-            per soddisfarne le aspettative.
-          </p>
+          <h2>{titolo}</h2>
+          <p>{descrizione}</p>
         </div>
 
-        {/* Cards in basso */}
         <div className={styles.cards}>
-          {cards.map((c) => (
-            <div key={c.title} className={`${styles.card} ${styles[`card_${c.variant}`]}`}>
-              <div className={styles.iconWrap}>{c.icon}</div>
-              <h3>{c.title}</h3>
-              <p>{c.desc}</p>
-            </div>
-          ))}
+          {cards.map((c) => {
+            const variant = "variante" in c ? c.variante : (c as {variant: string}).variant;
+            const title = "titolo" in c ? c.titolo : (c as {title: string}).title;
+            const desc = "descrizione" in c ? c.descrizione : (c as {desc: string}).desc;
+            const icon = "icon" in c ? (c as {icon: React.ReactNode}).icon : null;
+            return (
+              <div key={title} className={`${styles.card} ${styles[`card_${variant}`]}`}>
+                {icon && <div className={styles.iconWrap}>{icon}</div>}
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* Frecce */}
       <button className={`${styles.arrow} ${styles.arrowLeft}`}>←</button>
       <button className={`${styles.arrow} ${styles.arrowRight}`}>→</button>
     </section>

@@ -68,6 +68,7 @@ def search_prestazioni(query, branca=None, fondo=None, struttura=None):
             "multi_match": {
                 "query": query,
                 "fields": ["nome^5", "descrizione^2"],
+                "operator": "and",
                 "fuzziness": 1,
                 "prefix_length": 2,
             }

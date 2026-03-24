@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "corsheaders",
     # App locali
     "prestazioni",
+    "contenuto",
 ]
 
 MIDDLEWARE = [
