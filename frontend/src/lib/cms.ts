@@ -41,11 +41,15 @@ export interface SalutePerTeArticolo {
   link: string;
 }
 
+const isDev = process.env.NODE_ENV === "development";
+
 async function fetchCMS<T>(path: string, tags?: string[]): Promise<T | null> {
   try {
-    const res = await fetch(`${API}/api/cms/${path}`, {
-      next: { revalidate: 300, tags },
-    });
+    const res = await fetch(`${API}/api/cms/${path}`,
+      isDev
+        ? { cache: "no-store" }
+        : { next: { revalidate: 300, tags } }
+    );
     if (!res.ok) return null;
     return res.json();
   } catch {

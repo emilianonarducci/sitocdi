@@ -44,6 +44,8 @@ services:
       - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1,0.0.0.0,web}
       - CORS_ALLOWED_ORIGINS=http://localhost:3000
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - FRONTEND_URL=http://frontend:3000
+      - REVALIDATE_SECRET=${REVALIDATE_SECRET:-dev-revalidate-secret}
     depends_on:
       - db
       - opensearch
@@ -62,6 +64,7 @@ services:
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:8000
       - API_URL=http://web:8000
+      - REVALIDATE_SECRET=${REVALIDATE_SECRET:-dev-revalidate-secret}
     depends_on:
       - web
 
