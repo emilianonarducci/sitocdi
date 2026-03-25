@@ -13,11 +13,13 @@ def _revalidate_medico(pk: int):
     secret = os.environ.get("REVALIDATE_SECRET", "")
     if not frontend_url or not secret:
         return
-    paths = [f"/medici/{pk}", "/"]
     try:
         requests.post(
             f"{frontend_url}/api/revalidate",
-            json={"paths": paths},
+            json={
+                "tags": ["cms-medici", f"cms-medico-{pk}"],
+                "paths": [f"/medici/{pk}", "/"],
+            },
             headers={"Authorization": f"Bearer {secret}"},
             timeout=5,
         )

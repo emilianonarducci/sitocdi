@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { getMedico } from "@/lib/cms";
 import styles from "./page.module.css";
 
-export const revalidate = 60;
+export const revalidate = false; // on-demand via revalidateTag("cms-medici")
 
 export default async function SchedaMedicoPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

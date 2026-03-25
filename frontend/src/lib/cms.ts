@@ -41,10 +41,10 @@ export interface SalutePerTeArticolo {
   link: string;
 }
 
-async function fetchCMS<T>(path: string): Promise<T | null> {
+async function fetchCMS<T>(path: string, tags?: string[]): Promise<T | null> {
   try {
     const res = await fetch(`${API}/api/cms/${path}`, {
-      next: { revalidate: 60 },
+      next: { revalidate: 300, tags },
     });
     if (!res.ok) return null;
     return res.json();
@@ -53,10 +53,10 @@ async function fetchCMS<T>(path: string): Promise<T | null> {
   }
 }
 
-export const getHeroSlides = () => fetchCMS<HeroSlide[]>("hero/");
-export const getConsigliati = () => fetchCMS<ConsigliatiCard[]>("consigliati/");
-export const getPercheSceglierci = () => fetchCMS<PercheSceglierciData>("perche-sceglierci/");
-export const getSalutePerTe = () => fetchCMS<SalutePerTeArticolo[]>("salute-per-te/");
+export const getHeroSlides = () => fetchCMS<HeroSlide[]>("hero/", ["cms-hero"]);
+export const getConsigliati = () => fetchCMS<ConsigliatiCard[]>("consigliati/", ["cms-consigliati"]);
+export const getPercheSceglierci = () => fetchCMS<PercheSceglierciData>("perche-sceglierci/", ["cms-perche"]);
+export const getSalutePerTe = () => fetchCMS<SalutePerTeArticolo[]>("salute-per-te/", ["cms-salute"]);
 
 export interface TitoloAccademico {
   anno: string;
@@ -81,5 +81,5 @@ export interface SchedaMedico {
   link_prenota: string;
 }
 
-export const getMedici = () => fetchCMS<SchedaMedico[]>("medici/");
-export const getMedico = (id: number) => fetchCMS<SchedaMedico>(`medici/${id}/`);
+export const getMedici = () => fetchCMS<SchedaMedico[]>("medici/", ["cms-medici"]);
+export const getMedico = (id: number) => fetchCMS<SchedaMedico>(`medici/${id}/`, ["cms-medici", `cms-medico-${id}`]);
