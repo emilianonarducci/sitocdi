@@ -31,6 +31,11 @@ export default function StoreMap({ sedi, activeSedId, onMarkerClick, singleMode,
       const validSedi = sedi.filter((s) => s.lat && s.lng);
       if (!validSedi.length || !containerRef.current) return;
 
+      // Clear any stale Leaflet instance left on the DOM element (React Strict Mode mounts twice)
+      if ((containerRef.current as unknown as Record<string, unknown>)._leaflet_id) {
+        (containerRef.current as unknown as Record<string, unknown>)._leaflet_id = undefined;
+      }
+
       const center: [number, number] = singleMode && validSedi[0]
         ? [validSedi[0].lat!, validSedi[0].lng!]
         : [45.52, 9.28];
