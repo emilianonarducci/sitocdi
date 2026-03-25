@@ -1,8 +1,28 @@
 import csv
+import os
+import requests
 from django.contrib import admin
 from django.http import HttpResponse
 from django.utils.html import format_html
 from .models import HeroSlide, ConsigliatiCard, PercheSceglierciSezione, PercheSceglierciCard, SalutePerTeArticolo, SchedaMedico, NewsletterIscritto
+
+
+def _revalidate_medico(pk: int):
+    """Chiama il frontend Next.js per invalidare la cache ISR della scheda medico."""
+    frontend_url = os.environ.get("FRONTEND_URL", "").rstrip("/")
+    secret = os.environ.get("REVALIDATE_SECRET", "")
+    if not frontend_url or not secret:
+        return
+    paths = [f"/medici/{pk}", "/"]
+    try:
+        requests.post(
+            f"{frontend_url}/api/revalidate",
+            json={"paths": paths},
+            headers={"Authorization": f"Bearer {secret}"},
+            timeout=5,
+        )
+    except Exception:
+        pass
 
 
 @admin.register(HeroSlide)
@@ -56,6 +76,10 @@ class SchedaMedicoAdmin(admin.ModelAdmin):
         extra_context = extra_context or {}
         extra_context["upload_cv_url"] = "/api/cms/upload-cv/"
         return super().changeform_view(request, object_id, form_url, extra_context)
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        _revalidate_medico(obj.pk)
 
     change_form_template = "contenuto/schedamedico_change_form.html"
 
