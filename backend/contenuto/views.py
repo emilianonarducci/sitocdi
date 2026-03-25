@@ -7,7 +7,9 @@ from django.shortcuts import render, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from django.db import connection
-from .models import HeroSlide, ConsigliatiCard, PercheSceglierciSezione, SalutePerTeArticolo, SchedaMedico, CVImportJob
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from .models import HeroSlide, ConsigliatiCard, PercheSceglierciSezione, SalutePerTeArticolo, SchedaMedico, CVImportJob, NewsletterIscritto
 
 
 def hero_api(request):
@@ -81,6 +83,34 @@ def _medico_to_dict(m: SchedaMedico) -> dict:
         "pubblicazioni": m.pubblicazioni,
         "link_prenota": m.link_prenota,
     }
+
+
+@csrf_exempt
+@require_POST
+def newsletter_subscribe(request):
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "JSON non valido"}, status=400)
+
+    email = (data.get("email") or "").strip().lower()
+    if not email:
+        return JsonResponse({"error": "Email obbligatoria"}, status=400)
+
+    nome = (data.get("nome") or "").strip()
+    cognome = (data.get("cognome") or "").strip()
+
+    obj, created = NewsletterIscritto.objects.get_or_create(
+        email=email,
+        defaults={"nome": nome, "cognome": cognome, "attivo": True},
+    )
+    if not created and not obj.attivo:
+        obj.attivo = True
+        obj.nome = nome or obj.nome
+        obj.cognome = cognome or obj.cognome
+        obj.save(update_fields=["attivo", "nome", "cognome"])
+
+    return JsonResponse({"ok": True, "created": created})
 
 
 def medici_list_api(request):

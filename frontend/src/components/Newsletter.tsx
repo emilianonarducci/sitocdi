@@ -2,14 +2,32 @@
 import { useState } from "react";
 import styles from "./Newsletter.module.css";
 
+const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+
 export default function Newsletter() {
   const [form, setForm] = useState({ nome: "", cognome: "", email: "", privacy: false });
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!form.privacy || !form.email) return;
-    setSent(true);
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch(`${API}/api/cms/newsletter/subscribe/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome: form.nome, cognome: form.cognome, email: form.email }),
+      });
+      if (!res.ok) throw new Error("Errore server");
+      setSent(true);
+    } catch {
+      setError("Si è verificato un errore. Riprova.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -23,7 +41,7 @@ export default function Newsletter() {
           </p>
 
           {sent ? (
-            <p className={styles.success}>Grazie per l&apos;iscrizione!</p>
+            <p className={styles.success}>Grazie per l&apos;iscrizione! Ti terremo aggiornato.</p>
           ) : (
             <form className={styles.form} onSubmit={handleSubmit}>
               <div className={styles.row}>
@@ -50,6 +68,7 @@ export default function Newsletter() {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
               />
+              {error && <p style={{color:"#c0392b",fontSize:"13px",margin:"0 0 8px"}}>{error}</p>}
               <div className={styles.footer}>
                 <label className={styles.checkLabel}>
                   <input
@@ -64,8 +83,8 @@ export default function Newsletter() {
                     <a href="#" className={styles.privacyLink}>(leggi l&apos;informativa)</a>
                   </span>
                 </label>
-                <button type="submit" className={styles.btn}>
-                  Iscriviti ora →
+                <button type="submit" className={styles.btn} disabled={loading}>
+                  {loading ? "Invio..." : "Iscriviti ora →"}
                 </button>
               </div>
             </form>

@@ -1,6 +1,8 @@
+import csv
 from django.contrib import admin
+from django.http import HttpResponse
 from django.utils.html import format_html
-from .models import HeroSlide, ConsigliatiCard, PercheSceglierciSezione, PercheSceglierciCard, SalutePerTeArticolo, SchedaMedico
+from .models import HeroSlide, ConsigliatiCard, PercheSceglierciSezione, PercheSceglierciCard, SalutePerTeArticolo, SchedaMedico, NewsletterIscritto
 
 
 @admin.register(HeroSlide)
@@ -72,3 +74,30 @@ class SchedaMedicoAdmin(admin.ModelAdmin):
             "fields": ("pubblicazioni",),
         }),
     )
+
+
+@admin.register(NewsletterIscritto)
+class NewsletterIscrittoAdmin(admin.ModelAdmin):
+    list_display = ("email", "nome", "cognome", "data_iscrizione", "attivo")
+    list_filter = ("attivo", "data_iscrizione")
+    search_fields = ("email", "nome", "cognome")
+    readonly_fields = ("data_iscrizione",)
+    list_editable = ("attivo",)
+    actions = ["export_csv"]
+
+    @admin.action(description="Esporta selezionati come CSV")
+    def export_csv(self, request, queryset):
+        response = HttpResponse(content_type="text/csv; charset=utf-8")
+        response["Content-Disposition"] = 'attachment; filename="newsletter_iscritti.csv"'
+        response.write("\ufeff")  # BOM per Excel
+        writer = csv.writer(response)
+        writer.writerow(["Email", "Nome", "Cognome", "Data iscrizione", "Attivo"])
+        for obj in queryset:
+            writer.writerow([
+                obj.email,
+                obj.nome,
+                obj.cognome,
+                obj.data_iscrizione.strftime("%d/%m/%Y %H:%M"),
+                "Sì" if obj.attivo else "No",
+            ])
+        return response

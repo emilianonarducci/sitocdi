@@ -138,6 +138,22 @@ class SchedaMedico(models.Model):
         return self.nome_completo
 
 
+class NewsletterIscritto(models.Model):
+    nome = models.CharField("Nome", max_length=100, blank=True)
+    cognome = models.CharField("Cognome", max_length=100, blank=True)
+    email = models.EmailField("Email", unique=True)
+    data_iscrizione = models.DateTimeField("Data iscrizione", auto_now_add=True)
+    attivo = models.BooleanField("Attivo", default=True)
+
+    class Meta:
+        ordering = ["-data_iscrizione"]
+        verbose_name = "Iscritto newsletter"
+        verbose_name_plural = "Iscritti newsletter"
+
+    def __str__(self):
+        return f"{self.nome} {self.cognome} <{self.email}>".strip()
+
+
 class CVImportJob(models.Model):
     STATUS_PENDING = "pending"
     STATUS_PROCESSING = "processing"
