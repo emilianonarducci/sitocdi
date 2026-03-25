@@ -24,8 +24,8 @@ const TIPO_LABEL: Record<string, string> = {
 export default async function SediPage() {
   const sedi = await getSedi();
 
-  const citta = [...new Set(sedi.map((s) => s.citta))];
-  const province = [...new Set(sedi.map((s) => s.provincia).filter(Boolean))];
+  const citta = Array.from(new Set(sedi.map((s) => s.citta)));
+  const province = Array.from(new Set(sedi.map((s) => s.provincia).filter(Boolean)));
   const poliambulatori = sedi.filter((s) => s.tipo === "poliambulatorio" || s.tipo === "studio");
   const puntiPrelievi = sedi.filter((s) => s.tipo === "altro");
 
