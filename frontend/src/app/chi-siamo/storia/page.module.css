@@ -1,0 +1,231 @@
+.hero {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, #0052cc 100%);
+  color: #fff;
+  padding: 80px 20px 64px;
+  text-align: center;
+}
+
+.heroInner { max-width: 700px; margin: 0 auto; }
+
+.heroBadge {
+  display: inline-block;
+  background: rgba(255,255,255,.15);
+  border-radius: 20px;
+  padding: 4px 16px;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 16px;
+}
+
+.heroTitle {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.heroSub {
+  font-size: 1.1rem;
+  opacity: .8;
+}
+
+/* Apertura */
+.apertura {
+  padding: 56px 20px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e8edf4;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.lead {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #2d3a4a;
+  text-align: center;
+}
+
+/* Stats */
+.statsSection {
+  padding: 56px 20px;
+  background: var(--color-primary-dark);
+  color: #fff;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.statValore {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.statLabel {
+  font-size: .8rem;
+  opacity: .7;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+/* Timeline */
+.timelineSection {
+  padding: 72px 20px;
+  background: #fff;
+}
+
+.sectionTitle {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--color-primary), #e0e8f4);
+  transform: translateX(-50%);
+}
+
+.timelineItem {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: calc(50% + 32px);
+  margin-bottom: 40px;
+}
+
+.timelineItem.right {
+  justify-content: flex-start;
+  padding-right: 0;
+  padding-left: calc(50% + 32px);
+}
+
+.timelineContent {
+  background: #f4f8ff;
+  border: 1px solid #d4e2f8;
+  border-radius: 12px;
+  padding: 20px 24px;
+  max-width: 320px;
+  position: relative;
+}
+
+.timelineItem.right .timelineContent {
+  background: #fff;
+  border-color: #e8edf4;
+}
+
+.timelineAnno {
+  display: inline-block;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: .8rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.timelineTitolo {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin-bottom: 6px;
+}
+
+.timelineDesc {
+  font-size: .875rem;
+  color: #5a6a7e;
+  line-height: 1.6;
+}
+
+/* Quote */
+.quoteSection {
+  background: #f4f8ff;
+  padding: 64px 20px;
+  text-align: center;
+}
+
+.quote {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--color-primary-dark);
+  max-width: 720px;
+  margin: 0 auto 16px;
+  line-height: 1.7;
+}
+
+.quoteAuthor {
+  font-size: .875rem;
+  font-weight: 600;
+  color: #6b7fa3;
+}
+
+/* Leadership */
+.leadershipSection {
+  padding: 64px 20px;
+  background: #fff;
+}
+
+.leaderGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.leaderCard {
+  text-align: center;
+  padding: 24px;
+  border: 1px solid #e8edf4;
+  border-radius: 12px;
+}
+
+.leaderNome {
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin-bottom: 4px;
+}
+
+.leaderRuolo {
+  font-size: .85rem;
+  color: #6b7fa3;
+}
+
+@media (max-width: 640px) {
+  .timeline::before { left: 16px; }
+  .timelineItem,
+  .timelineItem.right {
+    justify-content: flex-start;
+    padding-left: 48px;
+    padding-right: 0;
+  }
+  .timelineContent { max-width: 100%; }
+}
