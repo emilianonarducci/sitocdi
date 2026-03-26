@@ -33,7 +33,7 @@ services:
         sync: false
       - key: GDRIVE_SERVICE_ACCOUNT_JSON
         sync: false
-      - key: GDRIVE_FILE_ID
+      - key: GDRIVE_FOLDER_ID
         sync: false
 
   # ── Frontend Next.js ────────────────────────────────────────

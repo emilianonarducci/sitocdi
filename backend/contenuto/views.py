@@ -300,21 +300,26 @@ def gdrive_newsletter_sync(request):
         return render(request, "contenuto/gdrive_newsletter_sync.html")
 
     # POST → esegui sync
-    file_id = os.environ.get("GDRIVE_FILE_ID", "")
+    folder_id = os.environ.get("GDRIVE_FOLDER_ID", "")
     has_creds = os.environ.get("GDRIVE_SERVICE_ACCOUNT_JSON") or os.environ.get("GDRIVE_SERVICE_ACCOUNT_FILE")
 
-    if not has_creds or not file_id:
-        messages.error(request, "Variabili d'ambiente mancanti: GDRIVE_FILE_ID e GDRIVE_SERVICE_ACCOUNT_JSON (o GDRIVE_SERVICE_ACCOUNT_FILE)")
+    if not has_creds or not folder_id:
+        messages.error(request, "Variabili d'ambiente mancanti: GDRIVE_FOLDER_ID e credenziali service account")
         return render(request, "contenuto/gdrive_newsletter_sync.html")
 
     try:
         from .management.commands.sync_newsletter_gdrive import run_sync
-        result = run_sync(file_id)
-        messages.success(
-            request,
-            f"Sync completata — File: {result['filename']} | "
-            f"Nuovi: {result['created']} · Aggiornati: {result['updated']} · Saltati: {result['skipped']}"
-        )
+        result = run_sync(folder_id)
+
+        if not result["files"]:
+            messages.warning(request, result.get("message", "Nessun file trovato"))
+        else:
+            file_names = ", ".join(f["name"] for f in result["files"])
+            messages.success(
+                request,
+                f"Sync completata — {len(result['files'])} file: {file_names} | "
+                f"Nuovi: {result['created']} · Aggiornati: {result['updated']} · Saltati: {result['skipped']}"
+            )
         if result["errors"]:
             for err in result["errors"]:
                 messages.warning(request, f"Riga ignorata: {err}")
