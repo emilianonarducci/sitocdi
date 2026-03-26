@@ -300,16 +300,16 @@ def gdrive_newsletter_sync(request):
         return render(request, "contenuto/gdrive_newsletter_sync.html")
 
     # POST → esegui sync
-    sa_json = os.environ.get("GDRIVE_SERVICE_ACCOUNT_JSON", "")
     file_id = os.environ.get("GDRIVE_FILE_ID", "")
+    has_creds = os.environ.get("GDRIVE_SERVICE_ACCOUNT_JSON") or os.environ.get("GDRIVE_SERVICE_ACCOUNT_FILE")
 
-    if not sa_json or not file_id:
-        messages.error(request, "Variabili d'ambiente mancanti: GDRIVE_SERVICE_ACCOUNT_JSON e GDRIVE_FILE_ID")
+    if not has_creds or not file_id:
+        messages.error(request, "Variabili d'ambiente mancanti: GDRIVE_FILE_ID e GDRIVE_SERVICE_ACCOUNT_JSON (o GDRIVE_SERVICE_ACCOUNT_FILE)")
         return render(request, "contenuto/gdrive_newsletter_sync.html")
 
     try:
         from .management.commands.sync_newsletter_gdrive import run_sync
-        result = run_sync(file_id, sa_json)
+        result = run_sync(file_id)
         messages.success(
             request,
             f"Sync completata — File: {result['filename']} | "

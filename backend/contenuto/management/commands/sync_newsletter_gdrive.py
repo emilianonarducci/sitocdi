@@ -105,14 +105,26 @@ def _normalize(row: dict) -> dict:
     return out
 
 
-def run_sync(file_id: str, sa_json_str: str) -> dict:
+def _load_sa_info() -> dict:
+    """Carica le credenziali service account da env var JSON o da file."""
+    sa_json = os.environ.get("GDRIVE_SERVICE_ACCOUNT_JSON", "")
+    if sa_json:
+        return json.loads(sa_json)
+    sa_file = os.environ.get("GDRIVE_SERVICE_ACCOUNT_FILE", "")
+    if sa_file:
+        with open(sa_file) as f:
+            return json.load(f)
+    raise Exception("GDRIVE_SERVICE_ACCOUNT_JSON o GDRIVE_SERVICE_ACCOUNT_FILE richiesto")
+
+
+def run_sync(file_id: str, sa_json_str: str = "") -> dict:
     """
     Esegue la sync e restituisce un dict con i contatori.
     Chiamabile sia dal management command che dalla view admin.
     """
     from contenuto.models import NewsletterIscritto
 
-    sa_info = json.loads(sa_json_str)
+    sa_info = json.loads(sa_json_str) if sa_json_str else _load_sa_info()
     content, filename = _download_file(file_id, sa_info)
     rows = _parse(content, filename)
 

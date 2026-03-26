@@ -11,3 +11,4 @@ staticfiles/
 node_modules/
 .next/
 
+backend/service_account.json

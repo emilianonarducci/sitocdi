@@ -104,16 +104,13 @@ class SchedaMedicoAdmin(admin.ModelAdmin):
 
 @admin.register(NewsletterIscritto)
 class NewsletterIscrittoAdmin(admin.ModelAdmin):
-    list_display = ("email", "nome", "cognome", "data_iscrizione", "attivo", "gdrive_sync_link")
+    list_display = ("email", "nome", "cognome", "data_iscrizione", "attivo")
     list_filter = ("attivo", "data_iscrizione")
     search_fields = ("email", "nome", "cognome")
     readonly_fields = ("data_iscrizione",)
     list_editable = ("attivo",)
     actions = ["export_csv"]
-
-    @admin.display(description="")
-    def gdrive_sync_link(self, obj):
-        return format_html('<a href="/api/cms/gdrive-newsletter-sync/" style="white-space:nowrap">↺ Sync Drive</a>')
+    change_list_template = "contenuto/newsletteriscritto_changelist.html"
 
     def changelist_view(self, request, extra_context=None):
         extra_context = extra_context or {}
