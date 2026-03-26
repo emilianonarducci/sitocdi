@@ -33,6 +33,16 @@ export default function Footer() {
             </ul>
           </div>
           <div className={styles.col}>
+            <h4>I Nostri Medici</h4>
+            <ul>
+              <li><a href="/medici">Tutti i medici</a></li>
+              <li><a href="/medici#cardiologia">Cardiologia</a></li>
+              <li><a href="/medici#ortopedia-e-traumatologia">Ortopedia</a></li>
+              <li><a href="/medici#radiologia">Radiologia</a></li>
+              <li><a href="/medici#ginecologia">Ginecologia</a></li>
+            </ul>
+          </div>
+          <div className={styles.col}>
             <h4>Supporto</h4>
             <ul>
               <li><a href="#">Contattaci</a></li>
