@@ -28,7 +28,7 @@ export default function Footer() {
             <h4>Chi siamo</h4>
             <ul>
               <li><a href="/chi-siamo/storia">La nostra storia</a></li>
-              <li><a href="#">I nostri centri</a></li>
+              <li><a href="/sedi">I nostri centri</a></li>
               <li><a href="#">Lavora con noi</a></li>
               <li><a href="/medici">Tutti i medici</a></li>
             </ul>
