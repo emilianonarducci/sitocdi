@@ -10,31 +10,33 @@ from django.core.management.base import BaseCommand
 from prestazioni.models import Struttura  # solo per import check
 from contenuto.models import SchedaMedico
 
-# Pool di ritratti medici con camice bianco — Unsplash (verificati HTTP 200)
+# fit=facearea&facepad=3 → Unsplash face-detection crop (ritaglia sul viso)
+_FP = "?w=400&h=400&q=80&auto=format&fit=facearea&facepad=3"
+
 FOTO_DONNE = [
-    "https://images.unsplash.com/photo-1719461341347-dac3e2087b59?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1759350075317-0ef24bee0428?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1676552055618-22ec8cde399a?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1753486986927-ff09dafb99a1?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1759350075177-eeb89d507990?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1753487050317-919a2b26a6ed?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1759350075145-92fa877c632a?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1754715203698-70c7ad3a879d?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1601852645220-cdb448d013ff?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1698779745239-aef2a07781e5?w=400&q=80&auto=format&fit=crop&crop=face",
+    f"https://images.unsplash.com/photo-1559839734-2b71ea197ec2{_FP}",   # camice bianco, capelli corti
+    f"https://images.unsplash.com/photo-1594824476967-48c8b964273f{_FP}", # stetoscopio, sorridente
+    f"https://images.unsplash.com/photo-1614608682850-e0d6ed316d47{_FP}", # camice bianco, capelli scuri
+    f"https://images.unsplash.com/photo-1527613426441-4da17471b66d{_FP}", # laboratorio, tratti europei
+    f"https://images.unsplash.com/photo-1623854767648-e7bb8009f0db{_FP}", # camice bianco, sorriso
+    f"https://images.unsplash.com/photo-1551601651-2a8555f1a136{_FP}",   # medico femminile
+    f"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2{_FP}", # professionista sanitaria
+    f"https://images.unsplash.com/photo-1607746882042-944635dfe10e{_FP}", # ritratto medico
+    f"https://images.unsplash.com/photo-1581091226825-a6a2a5aee158{_FP}", # dottoressa sorridente
+    f"https://images.unsplash.com/photo-1530026405186-ed1f139313f8{_FP}", # medico, volto frontale
 ]
 
 FOTO_UOMINI = [
-    "https://images.unsplash.com/photo-1645066928295-2506defde470?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1642975967602-653d378f3b5b?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1655559704433-36945d173a47?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1751006846381-6c379742b08a?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1741336649522-f0652dfdab1b?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1748288166888-f1bd5d6ef9ed?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1638109879065-10b4a3bf0360?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1712687947291-8e89f1f426ab?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1745758278377-2b42af378614?w=400&q=80&auto=format&fit=crop&crop=face",
-    "https://images.unsplash.com/photo-1681235853990-5c343a759dca?w=400&q=80&auto=format&fit=crop&crop=face",
+    f"https://images.unsplash.com/photo-1612349317150-e413f6a5b16d{_FP}", # camice, barba scura, mediterraneo
+    f"https://images.unsplash.com/photo-1582750433449-648ed127bb54{_FP}", # camice, mascherina
+    f"https://images.unsplash.com/photo-1618498082410-b4aa22193b38{_FP}", # chirurgo, occhi chiari
+    f"https://images.unsplash.com/photo-1537368910025-700350fe46c7{_FP}", # dottore stetoscopio
+    f"https://images.unsplash.com/photo-1622253692010-333f2da6031d{_FP}", # medico maschio
+    f"https://images.unsplash.com/photo-1560250097-0b93528c311a{_FP}",   # professionista camice
+    f"https://images.unsplash.com/photo-1585842378054-ee2e52f94ba2{_FP}", # dottore ritratto
+    f"https://images.unsplash.com/photo-1496247749665-49cf5b1022e9{_FP}", # medico anziano
+    f"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d{_FP}", # professionista maschile
+    f"https://images.unsplash.com/photo-1472099645785-5658abf4ff4e{_FP}", # ritratto uomo professionale
 ]
 
 # Nomi italiani maschili che terminano in 'a' (eccezioni alla regola)
