@@ -7,12 +7,13 @@
 }
 
 .backLink {
-  display: inline-block;
   color: rgba(255,255,255,.75);
   font-size: .85rem;
   font-weight: 600;
   text-decoration: none;
-  margin-top: 12px;
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 24px;
   transition: color .15s;
 }
 .backLink:hover { color: #fff; }
