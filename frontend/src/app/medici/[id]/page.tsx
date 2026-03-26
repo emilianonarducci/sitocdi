@@ -14,8 +14,7 @@ export default async function SchedaMedicoPage({ params }: { params: Promise<{ i
     <>
       {/* HERO */}
       <section className={styles.hero}>
-        <div className={styles.heroBadge}>I NOSTRI MEDICI</div>
-        <div><a href="/medici" className={styles.backLink}>← Torna a tutti i medici</a></div>
+        <a href="/medici" className={styles.heroBadge}>I NOSTRI MEDICI</a>
         <h1 className={styles.heroName}>{medico.nome_completo}</h1>
         <p className={styles.heroSpec}>{medico.specializzazione}</p>
         {medico.ruolo && <p className={styles.heroRuolo}>{medico.ruolo}</p>}

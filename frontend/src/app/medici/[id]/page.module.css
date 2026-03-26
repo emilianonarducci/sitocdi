@@ -6,17 +6,8 @@
   text-align: center;
 }
 
-.backLink {
-  color: rgba(255,255,255,.75);
-  font-size: .85rem;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 10px;
-  margin-bottom: 24px;
-  transition: color .15s;
-}
-.backLink:hover { color: #fff; }
+
+.heroBadge:hover { opacity: .85; }
 
 .heroBadge {
   display: inline-block;
