@@ -34,3 +34,9 @@ python-docx==1.1.*
 
 # HTTP client (revalidation ISR frontend)
 requests==2.32.*
+
+# Google Drive integration
+google-api-python-client==2.136.*
+google-auth==2.34.*
+google-auth-httplib2==0.2.*
+openpyxl==3.1.*

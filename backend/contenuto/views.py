@@ -292,3 +292,33 @@ def cv_import_status(request, job_id: int):
         })
 
     return render(request, "contenuto/cv_import_status.html", {"job": job})
+
+
+@staff_member_required
+def gdrive_newsletter_sync(request):
+    if request.method == "GET":
+        return render(request, "contenuto/gdrive_newsletter_sync.html")
+
+    # POST → esegui sync
+    sa_json = os.environ.get("GDRIVE_SERVICE_ACCOUNT_JSON", "")
+    file_id = os.environ.get("GDRIVE_FILE_ID", "")
+
+    if not sa_json or not file_id:
+        messages.error(request, "Variabili d'ambiente mancanti: GDRIVE_SERVICE_ACCOUNT_JSON e GDRIVE_FILE_ID")
+        return render(request, "contenuto/gdrive_newsletter_sync.html")
+
+    try:
+        from .management.commands.sync_newsletter_gdrive import run_sync
+        result = run_sync(file_id, sa_json)
+        messages.success(
+            request,
+            f"Sync completata — File: {result['filename']} | "
+            f"Nuovi: {result['created']} · Aggiornati: {result['updated']} · Saltati: {result['skipped']}"
+        )
+        if result["errors"]:
+            for err in result["errors"]:
+                messages.warning(request, f"Riga ignorata: {err}")
+    except Exception as e:
+        messages.error(request, f"Errore durante la sync: {e}")
+
+    return render(request, "contenuto/gdrive_newsletter_sync.html")

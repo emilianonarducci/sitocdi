@@ -11,4 +11,5 @@ urlpatterns = [
     path("newsletter/subscribe/", views.newsletter_subscribe, name="newsletter_subscribe"),
     path("upload-cv/", views.upload_cv_pdf, name="upload_cv_pdf"),
     path("upload-cv/status/<int:job_id>/", views.cv_import_status, name="cv_import_status"),
+    path("gdrive-newsletter-sync/", views.gdrive_newsletter_sync, name="gdrive_newsletter_sync"),
 ]
