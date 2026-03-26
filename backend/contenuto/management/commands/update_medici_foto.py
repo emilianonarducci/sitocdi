@@ -10,15 +10,32 @@ from django.core.management.base import BaseCommand
 from prestazioni.models import Struttura  # solo per import check
 from contenuto.models import SchedaMedico
 
-# Pool di 20 ritratti femminili e 20 maschili da randomuser.me
-# URL formato: https://randomuser.me/api/portraits/{women|men}/{n}.jpg
-FOTO_DONNE = [f"https://randomuser.me/api/portraits/women/{n}.jpg"
-              for n in [2, 5, 9, 14, 17, 21, 26, 33, 38, 44,
-                        51, 57, 62, 65, 71, 76, 82, 87, 91, 96]]
+# Pool di ritratti medici con camice bianco — Unsplash (verificati HTTP 200)
+FOTO_DONNE = [
+    "https://images.unsplash.com/photo-1719461341347-dac3e2087b59?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1759350075317-0ef24bee0428?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1676552055618-22ec8cde399a?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1753486986927-ff09dafb99a1?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1759350075177-eeb89d507990?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1753487050317-919a2b26a6ed?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1759350075145-92fa877c632a?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1754715203698-70c7ad3a879d?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1601852645220-cdb448d013ff?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1698779745239-aef2a07781e5?w=400&q=80&auto=format&fit=crop&crop=face",
+]
 
-FOTO_UOMINI = [f"https://randomuser.me/api/portraits/men/{n}.jpg"
-               for n in [3, 7, 11, 16, 22, 28, 35, 41, 47, 53,
-                         58, 63, 68, 74, 79, 84, 88, 93, 97, 99]]
+FOTO_UOMINI = [
+    "https://images.unsplash.com/photo-1645066928295-2506defde470?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1642975967602-653d378f3b5b?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1655559704433-36945d173a47?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1751006846381-6c379742b08a?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1741336649522-f0652dfdab1b?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1748288166888-f1bd5d6ef9ed?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1638109879065-10b4a3bf0360?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1712687947291-8e89f1f426ab?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1745758278377-2b42af378614?w=400&q=80&auto=format&fit=crop&crop=face",
+    "https://images.unsplash.com/photo-1681235853990-5c343a759dca?w=400&q=80&auto=format&fit=crop&crop=face",
+]
 
 # Nomi italiani maschili che terminano in 'a' (eccezioni alla regola)
 MASCHILI_IN_A = {
